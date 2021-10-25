@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Libreria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+
+<body class="bg-dark text-white">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top p-3">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-around fs-4" id="collapsibleNavbar">
+           
+            <ul class="navbar-nav">
+                <li class="nav-item me-4">
+                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                  </li>
+  
+                <li class="nav-item dropdown me-4">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Autores
+                  </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/autores}">Ver autores</a></li>
+                    <li><a class="dropdown-item" th:href="@{/autores/crear}">Ingresar autor</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown me-4">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Editoriales
+                  </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/editoriales}">Ver editoriales</a></li>
+                    <li><a class="dropdown-item" th:href="@{/editoriales/crear}">Ingresar editorial</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown me-4">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Libros
+                  </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/libros}">Ver Libros</a></li>
+                    <li><a class="dropdown-item" th:href="@{/libros/crear}">Ingresar libro</a></li>
+                  </ul>
+                </li>
+            </ul>
+          </div>
+        </nav>
+
+  <h2 class="ms-5">Listado de autores</h2>
+    <div th:if=${autores.isEmpty()}>
+      <p class="ms-5 fs-5">Todavia no hay autores cargados. <a th:href="@{/autores/crear}">Crear</a></p>
+    </div>
+  
+      <div class="table-responsive container-md mt-5" th:unless="${autores.isEmpty()}">
+        <table class="table table-dark table-bordered">
+          <thead class="table-secondary text-center">
+            <tr>
+              <th class="col text-dark">ID</th>
+              <th class="col text-dark">Nombre</th>
+              <th class="col text-dark">Acciones</th>
+            </tr>
+          </thead>      
+          <tbody>
+            <tr th:each = "autor : ${autores}">
+                <div th:if=${autor.alta}>
+               <td class="col" th:text="${autor.id}"></td>
+               <td class="col" th:text="${autor.nombre}"></td>  
+               <td class="col d-flex justify-content-center">
+                <a class="btn btn-primary me-4" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
+                <form method="post" th:action="@{/autores/baja/__${autor.id}__}">
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
+            </td>
+            </div>
+            </tr>
+          </tbody>    
+        </table>
+      </div>
+
+        <footer class="p-5 text-center mt-5 fixed-bottom">
+            <p>Andrea Reyna. 2021.</p>
+          </footer>
+      
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+
+    </html>
+
