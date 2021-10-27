@@ -15,16 +15,18 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String telefono;
+    private Boolean alta;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, Long documento, String nombre, String apellido, String telefono) {
+    public Cliente(Integer id, Long documento, String nombre, String apellido, String telefono, Boolean alta) {
         this.id = id;
         this.documento = documento;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
+        this.alta = alta;
     }
 
     public Integer getId() {
@@ -65,6 +67,14 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
     }
 
 }

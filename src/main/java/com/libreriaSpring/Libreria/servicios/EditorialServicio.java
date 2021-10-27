@@ -45,5 +45,10 @@ public class EditorialServicio {
     public void baja(Integer id) {
         er.baja(id, false);
     }
+    
+    @Transactional
+    public void alta(Integer id) {
+        er.baja(id, true);
+    }
 
 }

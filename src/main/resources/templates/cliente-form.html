@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libreria</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+
+<body class="bg-dark text-white">
+    <nav th:replace="fragmentos :: navbar"></nav>
+
+    <div class="container main">
+        <h2 th:text="${title}" class="mb-3"></h2>
+        <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
+            th:action="@{/clientes/__${action}__}" th:object="${cliente}">
+            <div class="form mb-3 col-xl-6">
+                <input class="form-control" id="id" placeholder="id" th:field="*{id}"
+                       th:readonly="${cliente.id}"
+                       type="text" style="visibility:hidden"/>
+            </div>
+            <div class="form mb-3 col-xl-6">
+                <label for="documento">DNI: </label> <br>
+                <input class="form-control" id="documento" placeholder="DNI" required th:field="*{documento}"
+                    th:readonly="${cliente.documento != null}" type="text" />
+                <div class="invalid-feedback">El DNI es obligatorio</div>
+            </div>
+            <div class="form mb-3 col-xl-6">
+                <label for="nombre">Nombre: </label> <br>
+                <input class="form-control text-dark" id="nombre" placeholder="Nombre" required th:field="*{nombre}"
+                    type="text" />
+                <div class="invalid-feedback">El nombre es obligatorio</div>
+            </div>
+            <div class="form mb-3 col-xl-6">
+                <label for="apellido">Apellido </label> <br>
+                <input class="form-control text-dark" id="apellido" placeholder="Apellido" required
+                    th:field="*{apellido}" type="text" />
+                <div class="invalid-feedback">El año es obligatorio</div>
+            </div>
+            <div class="form mb-3 col-xl-6">
+                <label for="ejemplares">Telefono: </label> <br>
+                <input class="form-control text-dark" id="telefono" placeholder="Telefono" required
+                    th:field="*{telefono}" type="text" />
+                <div class="invalid-feedback">El telefono es obligatorio</div>
+            </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear cliente' : 'Guardar cambios'"
+                type="submit"></button>
+        </div>
+    </div>
+</form>
+</div>
+
+<footer th:replace="fragmentos :: footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        (() => {
+        "use strict";
+
+        const form = document.getElementById("formulario");
+        form.addEventListener("submit", (event) => {
+        if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        }
+
+        form.classList.add("was-validated");
+        }, false);
+        })()
+    </script>
+</body>
+
+</html>

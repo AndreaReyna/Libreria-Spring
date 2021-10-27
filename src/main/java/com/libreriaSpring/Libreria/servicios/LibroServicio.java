@@ -63,12 +63,7 @@ public class LibroServicio {
     }
     
     @Transactional
-    public void prestamo(Integer id) throws ErrorServicio {
-        Libro libro = buscarPorId(id);
-        if  (libro.getEjemplares()>=1){
-          lr.prestamo(id, (libro.getEjemplaresPrestados()+1), (libro.getEjemplaresRestantes()-1));    
-        }else{
-            throw new ErrorServicio("No se puede realizar el prestamo");
-        }
+    public void alta(Integer id) {
+        lr.baja(id, true);
     }
 }

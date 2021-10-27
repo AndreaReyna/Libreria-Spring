@@ -23,23 +23,18 @@ public class Prestamo {
     private Libro libro;
     @ManyToOne //El cliente puede tener varios prestamos...
     private Cliente cliente;
+    Boolean alta;
 
     public Prestamo() {
     }
 
-    public Prestamo(Integer id, Date fechaPrestamo, Date fechaDevolucion, Libro libro, Cliente cliente) {
+    public Prestamo(Integer id, Date fechaPrestamo, Date fechaDevolucion, Libro libro, Cliente cliente, Boolean alta) {
         this.id = id;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
         this.libro = libro;
         this.cliente = cliente;
-    }
-
-    public Prestamo(Date fechaPrestamo, Date fechaDevolucion, Libro libro, Cliente cliente) {
-        this.fechaPrestamo = fechaPrestamo;
-        this.fechaDevolucion = fechaDevolucion;
-        this.libro = libro;
-        this.cliente = cliente;
+        this.alta = alta;
     }
 
     public Integer getId() {
@@ -80,5 +75,13 @@ public class Prestamo {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
     }
 }

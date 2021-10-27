@@ -37,9 +37,9 @@ public class AutorControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String nombre) throws ErrorServicio {
+    public RedirectView guardar(@RequestParam String nombre) throws Exception {
         autorServicio.crear(nombre);
-        return new RedirectView("/autores");
+        return new RedirectView("/autores");    
     }
 
     @GetMapping("/editar/{id}")
@@ -51,7 +51,6 @@ public class AutorControlador {
         return mav;
     }
 
-
     @PostMapping("/modificar")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre) {
         autorServicio.modificar(id, nombre);
@@ -59,8 +58,14 @@ public class AutorControlador {
     }
 
     @PostMapping("/baja/{id}")
-    public RedirectView eliminar(@PathVariable Integer id) {
+    public RedirectView baja(@PathVariable Integer id) {
         autorServicio.baja(id);
+        return new RedirectView("/autores");
+    }
+    
+    @PostMapping("/alta/{id}")
+    public RedirectView alta(@PathVariable Integer id) {
+        autorServicio.alta(id);
         return new RedirectView("/autores");
     }
 }

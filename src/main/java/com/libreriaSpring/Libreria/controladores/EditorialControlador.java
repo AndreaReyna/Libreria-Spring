@@ -59,8 +59,14 @@ public class EditorialControlador {
     }
 
     @PostMapping("/baja/{id}")
-    public RedirectView eliminar(@PathVariable Integer id) {
+    public RedirectView baja(@PathVariable Integer id) {
         es.baja(id);
+        return new RedirectView("/editoriales");
+    }
+    
+    @PostMapping("/alta/{id}")
+    public RedirectView alta(@PathVariable Integer id) {
+        es.alta(id);
         return new RedirectView("/editoriales");
     }
 }

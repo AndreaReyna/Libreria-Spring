@@ -16,14 +16,16 @@ public class AutorServicio {
     private AutorRepositorio AutorRepositorio;
 
     @Transactional
-    public void crear(String nombre) throws ErrorServicio {
-        //validar(nombre);
-
-        Autor autor = new Autor();
-        autor.setNombre(nombre);
-        autor.setAlta(true);
-
-        AutorRepositorio.save(autor);
+    public void crear(String nombre) throws Exception {
+        try {
+            validar(nombre);
+            Autor autor = new Autor();
+            autor.setNombre(nombre);
+            autor.setAlta(true);
+            AutorRepositorio.save(autor);
+        } catch (ErrorServicio e) {
+            e.getMessage();
+        }   
     }
 
     @Transactional(readOnly = true)
@@ -46,18 +48,23 @@ public class AutorServicio {
     public void baja(Integer id) {
         AutorRepositorio.baja(id, false);
     }
+    
+    @Transactional
+    public void alta(Integer id) {
+        AutorRepositorio.baja(id, true);
+    }
 
-    public void validar(String nombre) throws ErrorServicio {
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre del autor no puede ser nulo.");
+    public void validar(String nombre) throws Exception {
+        try {
+             if (nombre == null || nombre.trim().isEmpty()) {
+             throw new Exception("El nombre del autor no puede ser nulo.");
         }
-//        List<Autor> autores = AutorRepositorio.findAll();
-//        for (Autor a : autores) {
-//            if (a.getNombre() == nombre) {
-//                throw new ErrorServicio("El autor ya se encuentra registrado.");
-//            }
-//        }
-
-
+        
+        if (!(AutorRepositorio.buscarNombre(nombre)==null)) {
+             throw new Exception("El autor ya se encuentra registrado.");  
+        }   
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 }

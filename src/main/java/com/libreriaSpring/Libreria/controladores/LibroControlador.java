@@ -38,7 +38,6 @@ public class LibroControlador {
     public ModelAndView crearLibro() {
         ModelAndView mav = new ModelAndView("libro-form");
         mav.addObject("libro", new Libro());
-        mav.addObject("libros", ls.buscarTodos());
         mav.addObject("autores", as.buscarTodos());
         mav.addObject("editoriales", es.buscarTodas());
         mav.addObject("title", "Crear Libro");
@@ -70,8 +69,14 @@ public class LibroControlador {
     }
 
 @PostMapping("/baja/{id}")
-    public RedirectView eliminar(@PathVariable Integer id) {
+    public RedirectView baja(@PathVariable Integer id) {
         ls.baja(id);
+        return new RedirectView("/libros");
+    }
+    
+    @PostMapping("/alta/{id}")
+    public RedirectView alta(@PathVariable Integer id) {
+        ls.alta(id);
         return new RedirectView("/libros");
     }
 }
