@@ -47,20 +47,22 @@
 
                 <div class="form mb-3 col-xl-6" th:if="${action == 'guardar'}">
                     <label for="autor">Autor:</label> <br>
-                    <select aria-label="Elegir autor" class="form-select" id="autor" th:field="*{autor}">
+                    <select aria-label="Elegir autor" class="form-select" id="autor" required th:field="*{autor}">
                         <option selected value="">Elegir autor</option>
                         <option class="text-black" th:each="autor : ${autores}" th:text="|${autor.nombre}|"
                          th:if=${autor.alta} th:value="${autor.id}"></option>
                     </select>
+                    <div class="invalid-feedback">El autor es obligatorio</div>
                 </div>
 
                     <div class="form mb-3 col-xl-6" th:if="${action == 'guardar'}">
                         <label for="editorial">Editorial:</label> <br>
-                        <select aria-label="Elegir editorial" class="form-select" id="editorial" th:field="*{editorial}">
+                        <select aria-label="Elegir editorial" class="form-select" id="editorial" required th:field="*{editorial}">
                             <option selected value="">Elegir editorial</option>
                             <option class="text-black" th:each="editorial : ${editoriales}" th:text="|${editorial.nombre}|"
                                     th:if=${editorial.alta} th:value="${editorial.id}"></option>
                         </select>
+                        <div class="invalid-feedback">La editorial es obligatoria</div>
                 </div>
             <div class="row">
                 <div class="col">
@@ -69,6 +71,7 @@
                     </div>
             </div>
         </form>
+        <div th:replace="fragmentos :: div-error"></div>
     </div>
 
     <footer th:replace="fragmentos :: footer"></footer>

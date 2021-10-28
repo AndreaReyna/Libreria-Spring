@@ -1,5 +1,6 @@
 package com.libreriaSpring.Libreria.controladores;
 
+import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Libro;
 import com.libreriaSpring.Libreria.servicios.AutorServicio;
 import com.libreriaSpring.Libreria.servicios.EditorialServicio;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -57,14 +59,27 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd) {
-        ls.crear(isbn, titulo, anio, ejemplares, idAutor, idEd);
+    public RedirectView guardar(@RequestParam (defaultValue = "0") Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
+        try {
+          ls.crear(isbn, titulo, anio, ejemplares, idAutor, idEd);
+          a.addFlashAttribute("exito", "El libro se ingresó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+            return new RedirectView("/libros/crear");
+        }
+       
         return new RedirectView("/libros");
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio) {
-        ls.modificar(id, titulo, anio);
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, RedirectAttributes a) throws ErrorServicio {
+        try {
+            ls.modificar(id, titulo, anio);
+            a.addFlashAttribute("exito", "El libro se modificó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+        }
+        
         return new RedirectView("/libros");
     }
 
@@ -79,4 +94,5 @@ public class LibroControlador {
         ls.alta(id);
         return new RedirectView("/libros");
     }
+    
 }

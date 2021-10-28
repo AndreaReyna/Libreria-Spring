@@ -23,6 +23,12 @@
                        th:readonly="${prestamo.id}"
                        type="text" style="visibility:hidden"/>
             </div>
+            <div class="form mb-3 col-xl-6" th:if="${action == 'guardar'}">
+              <label for="fechaDevolucion">fecha de prestamo: </label> <br>
+              <input class="form-control" id="fechaPrestamo" placeholder="fechaPrestamo" required th:field="*{fechaPrestamo}"
+                     type="date"/>
+              <div class="invalid-feedback">la fecha de prestamo es obligatoria</div>
+              </div>
             <div class="form mb-3 col-xl-6" th:if="${action != 'guardar'}">
               <label for="fechaDevolucion">fecha de devolucion: </label> <br>
               <input class="form-control" id="fechaDevolucion" placeholder="fechaDevolucion" required th:field="*{fechaDevolucion}"
@@ -32,20 +38,22 @@
 
                 <div class="form mb-3 col-xl-6" th:if="${action == 'guardar'}">
                     <label for="cliente">Cliente:</label> <br>
-                    <select aria-label="Elegir cliente" class="form-select" id="cliente" th:field="*{cliente}">
+                    <select aria-label="Elegir cliente" class="form-select" id="cliente" required th:field="*{cliente}">
                         <option selected value="">Elegir cliente</option>
                         <option class="text-dark" th:each="c : ${clientes}" th:text="|${c.nombre} ${c.apellido}|"
                          th:if=${c.alta} th:value="${c.id}"></option>
                     </select>
+                    <div class="invalid-feedback">El cliente es obligatorio</div>
                 </div>
 
                     <div class="form mb-3 col-xl-6" th:if="${action == 'guardar'}">
                         <label for="Libro">Libro:</label> <br>
-                        <select aria-label="Elegir libro" class="form-select" id="libro" th:field="*{libro}">
+                        <select aria-label="Elegir libro" class="form-select" id="libro" required th:field="*{libro}">
                             <option selected value="">Elegir libro</option>
                             <option class="text-dark" th:each="libro : ${libros}" th:text="|${libro.titulo}|"
                                     th:if=${libro.alta} th:value="${libro.id}"></option>
                         </select>
+                        <div class="invalid-feedback">El libro es obligatorio</div>
                 </div>
 
             <div class="row">
@@ -55,7 +63,8 @@
                     </div>
             </div>
         </form>
-    </div>
+        <div th:replace="fragmentos :: div-error"></div>
+      </div>
 
     <footer th:replace="fragmentos :: footer"></footer>
       

@@ -1,5 +1,6 @@
 package com.libreriaSpring.Libreria.servicios;
 
+import Excepciones.ErrorServicio;
 import java.util.List;
 import com.libreriaSpring.Libreria.entidades.Cliente;
 import com.libreriaSpring.Libreria.repositorios.ClienteRepositorio;
@@ -15,9 +16,11 @@ public class ClienteServicio {
     private ClienteRepositorio cr;
 
     @Transactional
-    public void crear(Long documento, String nombre, String apellido, String tel) {
+    public void crear(Long documento, String nombre, String apellido, String tel) throws ErrorServicio {
+        
+        validar(documento);
+        
         Cliente c = new Cliente();
-
         c.setDocumento(documento);
         c.setNombre(nombre);
         c.setApellido(apellido);
@@ -50,5 +53,16 @@ public class ClienteServicio {
     @Transactional
     public void alta(Integer id) {
         cr.baja(id, true);
+    }
+    
+        public void validar(Long dni) throws ErrorServicio {
+
+        if (dni==0) {
+            throw new ErrorServicio("El DNI no puede estar vacio.");
+        }
+
+        if ((cr.buscarDni(dni) != null)) {
+            throw new ErrorServicio("El DNI ya se encuentra registrado.");
+        }
     }
 }

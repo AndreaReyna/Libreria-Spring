@@ -21,9 +21,12 @@ public interface LibroRepositorio extends JpaRepository<Libro, Integer> {
     @Modifying
     @Query("UPDATE Libro a SET a.ejemplaresPrestados = :ejemplaresPrestados, a.ejemplaresRestantes = :ejemplaresRestantes WHERE a.id = :id")
     void prestamo(@Param("id") Integer id, @Param("ejemplaresPrestados") Integer ejemplaresPrestados, @Param("ejemplaresRestantes") Integer ejemplaresRestantes);
-    
-    @Modifying
-    @Query("UPDATE Libro a SET a.ejemplaresPrestados = :ejemplaresPrestados, a.ejemplaresRestantes = :ejemplaresRestantes WHERE a.id = :id")
-    void devolucion(@Param("id") Integer id, @Param("ejemplaresPrestados") Integer ejemplaresPrestados, @Param("ejemplaresRestantes") Integer ejemplaresRestantes);
+   
+    @Query("SELECT a FROM Libro a WHERE a.titulo = :titulo")
+    Libro buscarNombre(@Param("titulo") String titulo);  
+   
+    @Query("SELECT a FROM Libro a WHERE a.isbn = :isbn")
+    Libro buscarIsbn(@Param("isbn") Long isbn); 
+
 }
 

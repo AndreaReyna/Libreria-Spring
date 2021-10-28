@@ -3,6 +3,7 @@ package com.libreriaSpring.Libreria.controladores;
 import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Cliente;
 import com.libreriaSpring.Libreria.servicios.ClienteServicio;
+import static java.util.Objects.isNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -37,8 +39,15 @@ public class ClienteControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam Long documento, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono) throws ErrorServicio {
-        cs.crear(documento, nombre, apellido, telefono);
+    public RedirectView guardar(@RequestParam (defaultValue = "0") Long documento, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, RedirectAttributes a) throws ErrorServicio {
+        try {
+          cs.crear(documento, nombre, apellido, telefono);
+          a.addFlashAttribute("exito", "El cliente se guardó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+           return new RedirectView("/clientes/crear");
+        }
+        
         return new RedirectView("/clientes");
     }
 
@@ -53,8 +62,14 @@ public class ClienteControlador {
 
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono) {
-        cs.modificar(id, nombre, apellido, telefono);
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, RedirectAttributes a) {
+        try {
+          cs.modificar(id, nombre, apellido, telefono); 
+          a.addFlashAttribute("exito", "El cliente se modificó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+        }
+        
         return new RedirectView("/clientes");
     }
 

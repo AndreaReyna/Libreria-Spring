@@ -16,16 +16,13 @@ public class AutorServicio {
     private AutorRepositorio AutorRepositorio;
 
     @Transactional
-    public void crear(String nombre) throws Exception {
-        try {
-            validar(nombre);
-            Autor autor = new Autor();
-            autor.setNombre(nombre);
-            autor.setAlta(true);
-            AutorRepositorio.save(autor);
-        } catch (ErrorServicio e) {
-            e.getMessage();
-        }   
+    public void crear(String nombre) throws ErrorServicio {
+
+        validar(nombre);
+        Autor autor = new Autor();
+        autor.setNombre(nombre);
+        autor.setAlta(true);
+        AutorRepositorio.save(autor);
     }
 
     @Transactional(readOnly = true)
@@ -40,7 +37,8 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre) {
+    public void modificar(Integer id, String nombre) throws ErrorServicio {
+        validar(nombre);
         AutorRepositorio.modificar(id, nombre);
     }
 
@@ -48,23 +46,20 @@ public class AutorServicio {
     public void baja(Integer id) {
         AutorRepositorio.baja(id, false);
     }
-    
+
     @Transactional
     public void alta(Integer id) {
         AutorRepositorio.baja(id, true);
     }
 
-    public void validar(String nombre) throws Exception {
-        try {
-             if (nombre == null || nombre.trim().isEmpty()) {
-             throw new Exception("El nombre del autor no puede ser nulo.");
+    public void validar(String nombre) throws ErrorServicio {
+        
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre del autor no puede estar vacio.");
         }
         
-        if (!(AutorRepositorio.buscarNombre(nombre)==null)) {
-             throw new Exception("El autor ya se encuentra registrado.");  
-        }   
-        } catch (Exception e) {
-            e.getMessage();
+        if ((AutorRepositorio.buscarNombre(nombre) != null)) {
+            throw new ErrorServicio("El autor ya se encuentra registrado con ese nombre.");
         }
     }
 }

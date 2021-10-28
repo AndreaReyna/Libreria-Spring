@@ -66,4 +66,7 @@
     <p>Andrea Reyna. 2021.</p>
 </footer>
 
+<div th:fragment="div-error" th:if=${error!=null} class="alert alert-danger mt-4 col-xl-6" th:text="${error}"></div>
+<div th:fragment="div-exito" th:if=${exito!=null} class="alert alert-success mt-4 col-xl-6" th:text="${exito}"></div>
+
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -49,8 +50,14 @@ public class PrestamoControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente) throws ErrorServicio{
-        ps.crearPrestamo(idLibro, idCliente);
+    public RedirectView guardar(@RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente, RedirectAttributes a) throws ErrorServicio{
+        try {
+           ps.crearPrestamo(idLibro, idCliente);  
+           a.addFlashAttribute("exito", "El prestamo se ingresó correctamente!");
+        } catch (Exception e) {
+           a.addFlashAttribute("error", e.getMessage());
+        }
+       
         return new RedirectView("/prestamos");
     }
 
@@ -64,8 +71,13 @@ public class PrestamoControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView eliminar(@RequestParam Integer id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDevolucion) {
-        ps.baja(id, fechaDevolucion);
+    public RedirectView eliminar(@RequestParam Integer id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDevolucion, RedirectAttributes a) throws ErrorServicio {
+        try {
+            ps.baja(id, fechaDevolucion);
+            a.addFlashAttribute("exito", "La devolución se realizó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+        }
         return new RedirectView("/prestamos");
     }
 }

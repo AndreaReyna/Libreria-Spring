@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -37,11 +38,17 @@ public class AutorControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String nombre) throws Exception {
-        autorServicio.crear(nombre);
+    public RedirectView guardar(@RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
+        try { 
+           autorServicio.crear(nombre); 
+          a.addFlashAttribute("exito", "El autor se guardó correctamente!");
+        } catch (ErrorServicio e) {  
+            a.addFlashAttribute("error", e.getMessage());
+            return new RedirectView("/autores/crear");
+        }
         return new RedirectView("/autores");    
     }
-
+    
     @GetMapping("/editar/{id}")
     public ModelAndView editarAutor(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("autor-form");
@@ -52,8 +59,13 @@ public class AutorControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre) {
-        autorServicio.modificar(id, nombre);
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
+        try {
+            autorServicio.modificar(id, nombre);
+            a.addFlashAttribute("exito", "El autor se modificó correctamente!");
+        } catch (ErrorServicio e) {
+            a.addFlashAttribute("error", e.getMessage());
+        }
         return new RedirectView("/autores");
     }
 

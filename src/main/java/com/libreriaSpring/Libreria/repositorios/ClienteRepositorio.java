@@ -17,4 +17,7 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Integer> {
     @Modifying
     @Query("UPDATE Cliente a SET a.alta = :alta WHERE a.id = :id")
     void baja(@Param("id") Integer id, @Param("alta") Boolean alta);
+           
+    @Query("SELECT a FROM Cliente a WHERE a.documento = :documento")
+    Cliente buscarDni(@Param("documento") Long documento); 
 }

@@ -1,5 +1,6 @@
 package com.libreriaSpring.Libreria.controladores;
 
+import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Editorial;
 import com.libreriaSpring.Libreria.servicios.EditorialServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -37,8 +39,14 @@ public class EditorialControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String nombre) {
-        es.crear(nombre);
+    public RedirectView guardar(@RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
+        try {
+         es.crear(nombre); 
+         a.addFlashAttribute("exito", "La editorial se guardó correctamente!");
+        } catch (ErrorServicio e) {  
+            a.addFlashAttribute("error", e.getMessage());
+            return new RedirectView("/editoriales/crear");
+        }   
         return new RedirectView("/editoriales");
     }
 
@@ -53,8 +61,13 @@ public class EditorialControlador {
 
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre) {
-        es.modificar(id, nombre);
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
+        try {
+        es.modificar(id, nombre); 
+        a.addFlashAttribute("exito", "La editorial se modificó correctamente!");
+        } catch (ErrorServicio e) {
+           a.addFlashAttribute("error", e.getMessage()); 
+        }
         return new RedirectView("/editoriales");
     }
 
