@@ -53,11 +53,11 @@ public class AutorServicio {
     }
 
     public void validar(String nombre) throws ErrorServicio {
-        
+
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new ErrorServicio("El nombre del autor no puede estar vacio.");
         }
-        
+
         if ((AutorRepositorio.buscarNombre(nombre) != null)) {
             throw new ErrorServicio("El autor ya se encuentra registrado con ese nombre.");
         }

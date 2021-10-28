@@ -18,11 +18,11 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/clientes")
 public class ClienteControlador {
-    
+
     @Autowired
     private ClienteServicio cs;
-    
-     @GetMapping
+
+    @GetMapping
     public ModelAndView mostrarClientes() {
         ModelAndView mav = new ModelAndView("clientes");
         mav.addObject("clientes", cs.buscarTodos());
@@ -39,15 +39,15 @@ public class ClienteControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam (defaultValue = "0") Long documento, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, RedirectAttributes a) throws ErrorServicio {
+    public RedirectView guardar(@RequestParam(defaultValue = "0") Long documento, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, RedirectAttributes a) throws ErrorServicio {
         try {
-          cs.crear(documento, nombre, apellido, telefono);
-          a.addFlashAttribute("exito", "El cliente se guardó correctamente!");
+            cs.crear(documento, nombre, apellido, telefono);
+            a.addFlashAttribute("exito", "El cliente se guardó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
-           return new RedirectView("/clientes/crear");
+            return new RedirectView("/clientes/crear");
         }
-        
+
         return new RedirectView("/clientes");
     }
 
@@ -60,16 +60,15 @@ public class ClienteControlador {
         return mav;
     }
 
-
     @PostMapping("/modificar")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, RedirectAttributes a) {
         try {
-          cs.modificar(id, nombre, apellido, telefono); 
-          a.addFlashAttribute("exito", "El cliente se modificó correctamente!");
+            cs.modificar(id, nombre, apellido, telefono);
+            a.addFlashAttribute("exito", "El cliente se modificó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
         }
-        
+
         return new RedirectView("/clientes");
     }
 
@@ -78,7 +77,7 @@ public class ClienteControlador {
         cs.baja(id);
         return new RedirectView("/clientes");
     }
-    
+
     @PostMapping("/alta/{id}")
     public RedirectView alta(@PathVariable Integer id) {
         cs.alta(id);

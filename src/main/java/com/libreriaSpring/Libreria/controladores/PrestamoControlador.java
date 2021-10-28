@@ -24,13 +24,13 @@ public class PrestamoControlador {
 
     @Autowired
     private PrestamoServicio ps;
-    
+
     @Autowired
     private ClienteServicio cs;
-    
+
     @Autowired
     private LibroServicio ls;
-    
+
     @GetMapping
     public ModelAndView mostrarPrestamos() {
         ModelAndView mav = new ModelAndView("prestamos");
@@ -50,14 +50,14 @@ public class PrestamoControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente, RedirectAttributes a) throws ErrorServicio{
+    public RedirectView guardar(@RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente, RedirectAttributes a) throws ErrorServicio {
         try {
-           ps.crearPrestamo(idLibro, idCliente);  
-           a.addFlashAttribute("exito", "El prestamo se ingresó correctamente!");
+            ps.crearPrestamo(idLibro, idCliente);
+            a.addFlashAttribute("exito", "El prestamo se ingresó correctamente!");
         } catch (Exception e) {
-           a.addFlashAttribute("error", e.getMessage());
+            a.addFlashAttribute("error", e.getMessage());
         }
-       
+
         return new RedirectView("/prestamos");
     }
 

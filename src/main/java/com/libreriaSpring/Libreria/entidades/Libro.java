@@ -6,10 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 @Entity
 public class Libro {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -48,7 +47,7 @@ public class Libro {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Long getIsbn() {
         return isbn;
     }
@@ -119,5 +118,5 @@ public class Libro {
 
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
-    }    
+    }
 }

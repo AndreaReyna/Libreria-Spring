@@ -2,68 +2,73 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top p-3">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-around fs-4" id="collapsibleNavbar">
-     
-      <ul class="navbar-nav">
-          <li class="nav-item me-4">
-              <a class="nav-link" th:href="@{/}">Inicio</a>
-            </li>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-around fs-4" id="collapsibleNavbar">
 
-          <li class="nav-item dropdown me-4">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Autores
-            </a>
-          <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" th:href="@{/autores}">Ver autores</a></li>
-              <li><a class="dropdown-item" th:href="@{/autores/crear}">Ingresar autor</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown me-4">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Editoriales
-            </a>
-          <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" th:href="@{/editoriales}">Ver editoriales</a></li>
-              <li><a class="dropdown-item" th:href="@{/editoriales/crear}">Ingresar editorial</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown me-4">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Libros
-            </a>
-          <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" th:href="@{/libros}">Ver libros</a></li>
-              <li><a class="dropdown-item" th:href="@{/libros/crear}">Ingresar libro</a></li>
-            </ul>
-          </li>
+    <ul class="navbar-nav">
+      <li class="nav-item me-4">
+        <a class="nav-link" th:href="@{/}">Inicio</a>
+      </li>
 
-          <li class="nav-item dropdown me-4">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Clientes
-            </a>
-          <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" th:href="@{/clientes}">Ver clientes</a></li>
-              <li><a class="dropdown-item" th:href="@{/clientes/crear}">Ingresar cliente</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown me-4">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Prestamos
-            </a>
-          <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" th:href="@{/prestamos}">Ver prestamos</a></li>
-              <li><a class="dropdown-item" th:href="@{/prestamos/crear}">Ingresar prestamo</a></li>
-            </ul>
-          </li>
-      </ul>
-    </div>
+      <li class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Autores
+        </a>
+        <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" th:href="@{/autores}">Ver autores</a></li>
+          <li><a class="dropdown-item" th:href="@{/autores/crear}">Ingresar autor</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Editoriales
+        </a>
+        <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" th:href="@{/editoriales}">Ver editoriales</a></li>
+          <li><a class="dropdown-item" th:href="@{/editoriales/crear}">Ingresar editorial</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Libros
+        </a>
+        <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" th:href="@{/libros}">Ver libros</a></li>
+          <li><a class="dropdown-item" th:href="@{/libros/crear}">Ingresar libro</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Clientes
+        </a>
+        <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" th:href="@{/clientes}">Ver clientes</a></li>
+          <li><a class="dropdown-item" th:href="@{/clientes/crear}">Ingresar cliente</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Prestamos
+        </a>
+        <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" th:href="@{/prestamos}">Ver prestamos</a></li>
+          <li><a class="dropdown-item" th:href="@{/prestamos/crear}">Ingresar prestamo</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <footer th:fragment="footer" class="p-5 text-center mt-5 ">
-    <p>Andrea Reyna. 2021.</p>
+  <p>Andrea Reyna. 2021.</p>
 </footer>
 
 <div th:fragment="div-error" th:if=${error!=null} class="alert alert-danger mt-4 col-xl-6" th:text="${error}"></div>

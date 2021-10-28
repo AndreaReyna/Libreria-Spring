@@ -19,16 +19,16 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/libros")
 public class LibroControlador {
-    
+
     @Autowired
     private LibroServicio ls;
 
     @Autowired
     private AutorServicio as;
-    
+
     @Autowired
     private EditorialServicio es;
-    
+
     @GetMapping
     public ModelAndView mostrarTodos() {
         ModelAndView mav = new ModelAndView("libros");
@@ -59,15 +59,15 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam (defaultValue = "0") Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
+    public RedirectView guardar(@RequestParam(defaultValue = "0") Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
         try {
-          ls.crear(isbn, titulo, anio, ejemplares, idAutor, idEd);
-          a.addFlashAttribute("exito", "El libro se ingresó correctamente!");
+            ls.crear(isbn, titulo, anio, ejemplares, idAutor, idEd);
+            a.addFlashAttribute("exito", "El libro se ingresó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
             return new RedirectView("/libros/crear");
         }
-       
+
         return new RedirectView("/libros");
     }
 
@@ -79,20 +79,20 @@ public class LibroControlador {
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
         }
-        
+
         return new RedirectView("/libros");
     }
 
-@PostMapping("/baja/{id}")
+    @PostMapping("/baja/{id}")
     public RedirectView baja(@PathVariable Integer id) {
         ls.baja(id);
         return new RedirectView("/libros");
     }
-    
+
     @PostMapping("/alta/{id}")
     public RedirectView alta(@PathVariable Integer id) {
         ls.alta(id);
         return new RedirectView("/libros");
     }
-    
+
 }

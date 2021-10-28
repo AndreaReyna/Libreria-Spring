@@ -1,4 +1,3 @@
-
 package Excepciones;
 
 public class ErrorServicio extends Exception {

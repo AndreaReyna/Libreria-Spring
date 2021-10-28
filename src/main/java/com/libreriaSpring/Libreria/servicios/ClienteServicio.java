@@ -17,9 +17,9 @@ public class ClienteServicio {
 
     @Transactional
     public void crear(Long documento, String nombre, String apellido, String tel) throws ErrorServicio {
-        
+
         validar(documento);
-        
+
         Cliente c = new Cliente();
         c.setDocumento(documento);
         c.setNombre(nombre);
@@ -29,7 +29,7 @@ public class ClienteServicio {
         cr.save(c);
     }
 
-     @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<Cliente> buscarTodos() {
         return cr.findAll();
     }
@@ -49,15 +49,15 @@ public class ClienteServicio {
     public void baja(Integer id) {
         cr.baja(id, false);
     }
-    
+
     @Transactional
     public void alta(Integer id) {
         cr.baja(id, true);
     }
-    
-        public void validar(Long dni) throws ErrorServicio {
 
-        if (dni==0) {
+    public void validar(Long dni) throws ErrorServicio {
+
+        if (dni == 0) {
             throw new ErrorServicio("El DNI no puede estar vacio.");
         }
 

@@ -41,12 +41,12 @@ public class EditorialControlador {
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
         try {
-         es.crear(nombre); 
-         a.addFlashAttribute("exito", "La editorial se guardó correctamente!");
-        } catch (ErrorServicio e) {  
+            es.crear(nombre);
+            a.addFlashAttribute("exito", "La editorial se guardó correctamente!");
+        } catch (ErrorServicio e) {
             a.addFlashAttribute("error", e.getMessage());
             return new RedirectView("/editoriales/crear");
-        }   
+        }
         return new RedirectView("/editoriales");
     }
 
@@ -59,14 +59,13 @@ public class EditorialControlador {
         return mav;
     }
 
-
     @PostMapping("/modificar")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
         try {
-        es.modificar(id, nombre); 
-        a.addFlashAttribute("exito", "La editorial se modificó correctamente!");
+            es.modificar(id, nombre);
+            a.addFlashAttribute("exito", "La editorial se modificó correctamente!");
         } catch (ErrorServicio e) {
-           a.addFlashAttribute("error", e.getMessage()); 
+            a.addFlashAttribute("error", e.getMessage());
         }
         return new RedirectView("/editoriales");
     }
@@ -76,11 +75,10 @@ public class EditorialControlador {
         es.baja(id);
         return new RedirectView("/editoriales");
     }
-    
+
     @PostMapping("/alta/{id}")
     public RedirectView alta(@PathVariable Integer id) {
         es.alta(id);
         return new RedirectView("/editoriales");
     }
 }
-

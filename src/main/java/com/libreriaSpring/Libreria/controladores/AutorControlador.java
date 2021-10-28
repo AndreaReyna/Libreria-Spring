@@ -39,16 +39,16 @@ public class AutorControlador {
 
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
-        try { 
-           autorServicio.crear(nombre); 
-          a.addFlashAttribute("exito", "El autor se guardó correctamente!");
-        } catch (ErrorServicio e) {  
+        try {
+            autorServicio.crear(nombre);
+            a.addFlashAttribute("exito", "El autor se guardó correctamente!");
+        } catch (ErrorServicio e) {
             a.addFlashAttribute("error", e.getMessage());
             return new RedirectView("/autores/crear");
         }
-        return new RedirectView("/autores");    
+        return new RedirectView("/autores");
     }
-    
+
     @GetMapping("/editar/{id}")
     public ModelAndView editarAutor(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("autor-form");
@@ -74,7 +74,7 @@ public class AutorControlador {
         autorServicio.baja(id);
         return new RedirectView("/autores");
     }
-    
+
     @PostMapping("/alta/{id}")
     public RedirectView alta(@PathVariable Integer id) {
         autorServicio.alta(id);

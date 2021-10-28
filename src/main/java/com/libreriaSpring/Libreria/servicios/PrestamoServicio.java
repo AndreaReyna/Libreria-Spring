@@ -17,13 +17,12 @@ public class PrestamoServicio {
 
     @Autowired
     private PrestamoRepositorio pr;
-    
+
     @Autowired
     private ClienteRepositorio cr;
-    
+
     @Autowired
     private LibroRepositorio lr;
-     
 
     @Transactional
     public void crearPrestamo(Integer idLibro, Integer idCliente) throws ErrorServicio {
@@ -32,15 +31,13 @@ public class PrestamoServicio {
         p.setFechaPrestamo(new Date());
         p.setCliente(cr.findById(idCliente).orElse(null));
         p.setLibro(lr.findById(idLibro).orElse(null));
-        
-        if (p.getLibro().getEjemplaresRestantes()<1){
-          throw new ErrorServicio("No quedan ejemplares para prestar");  
+
+        if (p.getLibro().getEjemplaresRestantes() < 1) {
+            throw new ErrorServicio("No quedan ejemplares para prestar");
         }
-        
-        lr.prestamo(p.getLibro().getId(), p.getLibro().getEjemplaresPrestados()+1, p.getLibro().getEjemplaresRestantes()-1);
-       
-            
-        
+
+        lr.prestamo(p.getLibro().getId(), p.getLibro().getEjemplaresPrestados() + 1, p.getLibro().getEjemplaresRestantes() - 1);
+
         p.setAlta(true);
         pr.save(p);
     }
@@ -49,8 +46,8 @@ public class PrestamoServicio {
     public List<Prestamo> buscarTodos() {
         return pr.findAll();
     }
-    
-     @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public Prestamo buscarPorId(Integer id) {
         Optional<Prestamo> prestamoOptional = pr.findById(id);
         return prestamoOptional.orElse(null);
@@ -59,12 +56,12 @@ public class PrestamoServicio {
     @Transactional
     public void baja(Integer id, Date fechaDevolucion) throws ErrorServicio {
         Prestamo p = buscarPorId(id);
-        
+
         if (fechaDevolucion.before(p.getFechaPrestamo())) {
             throw new ErrorServicio("La fecha de devolucion no puede ser anterior a la del prestamo");
         }
         pr.baja(id, false, fechaDevolucion);
-        
-        lr.prestamo(p.getLibro().getId(), p.getLibro().getEjemplaresPrestados()-1, p.getLibro().getEjemplaresRestantes()+1);
+
+        lr.prestamo(p.getLibro().getId(), p.getLibro().getEjemplaresPrestados() - 1, p.getLibro().getEjemplaresRestantes() + 1);
     }
 }

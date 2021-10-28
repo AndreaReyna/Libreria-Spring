@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PrestamoRepositorio extends JpaRepository<Prestamo, Integer> {
-   
+
     @Modifying
     @Query("UPDATE Prestamo a SET a.alta = :alta, a.fechaDevolucion = :fechaDevolucion WHERE a.id = :id")
     void baja(@Param("id") Integer id, @Param("alta") Boolean alta, @Param("fechaDevolucion") Date fechaDevolucion);

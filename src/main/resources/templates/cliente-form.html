@@ -20,9 +20,8 @@
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
             th:action="@{/clientes/__${action}__}" th:object="${cliente}">
             <div class="form mb-3 col-xl-6">
-                <input class="form-control" id="id" placeholder="id" th:field="*{id}"
-                       th:readonly="${cliente.id}"
-                       type="text" style="visibility:hidden"/>
+                <input class="form-control" id="id" placeholder="id" th:field="*{id}" th:readonly="${cliente.id}"
+                    type="text" style="visibility:hidden" />
             </div>
             <div class="form mb-3 col-xl-6">
                 <label for="documento">DNI: </label> <br>
@@ -48,33 +47,35 @@
                     th:field="*{telefono}" type="text" />
                 <div class="invalid-feedback">El telefono es obligatorio</div>
             </div>
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear cliente' : 'Guardar cambios'"
-                type="submit"></button>
-        </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success"
+                        th:text="${action == 'guardar'} ? 'Crear cliente' : 'Guardar cambios'" type="submit"></button>
+                </div>
+            </div>
+        </form>
+        <div th:replace="fragmentos :: div-error"></div>
     </div>
-</form>
-    <div th:replace="fragmentos :: div-error"></div>
-</div>
 
-<footer th:replace="fragmentos :: footer"></footer>
+    <footer th:replace="fragmentos :: footer"></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <script>
         (() => {
-        "use strict";
+            "use strict";
 
-        const form = document.getElementById("formulario");
-        form.addEventListener("submit", (event) => {
-        if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-        }
+            const form = document.getElementById("formulario");
+            form.addEventListener("submit", (event) => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
 
-        form.classList.add("was-validated");
-        }, false);
+                form.classList.add("was-validated");
+            }, false);
         })()
     </script>
 </body>
