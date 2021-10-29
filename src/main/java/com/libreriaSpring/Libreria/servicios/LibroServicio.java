@@ -55,9 +55,17 @@ public class LibroServicio {
     }
 
     @Transactional
-    public void modificar(Integer id, String titulo, Integer anio) throws ErrorServicio {
-        validarTitulo(titulo);
-        lr.modificar(id, titulo, anio);
+    public void modificar(Integer id, String titulo, Integer anio, Integer idAutor, Integer idEd) throws ErrorServicio {
+            if (titulo == null || titulo.trim().isEmpty()) {
+            throw new ErrorServicio("El titulo del libro no puede estar vacio.");
+        }
+        
+        Libro libro = buscarPorId(id);
+        libro.setTitulo(titulo);
+        libro.setAnio(anio);
+        libro.setAutor(ar.findById(idAutor).orElse(null));
+        libro.setEditorial(er.findById(idEd).orElse(null));
+        lr.save(libro);
     }
 
     @Transactional

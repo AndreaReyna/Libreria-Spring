@@ -17,7 +17,6 @@ public class AutorServicio {
 
     @Transactional
     public void crear(String nombre) throws ErrorServicio {
-
         validar(nombre);
         Autor autor = new Autor();
         autor.setNombre(nombre);

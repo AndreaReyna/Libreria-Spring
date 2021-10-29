@@ -72,9 +72,9 @@ public class LibroControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, RedirectAttributes a) throws ErrorServicio {
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
         try {
-            ls.modificar(id, titulo, anio);
+            ls.modificar(id, titulo, anio, idAutor, idEd);
             a.addFlashAttribute("exito", "El libro se modificó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
