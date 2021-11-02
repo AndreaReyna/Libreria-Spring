@@ -1,12 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,400&display=swap');
 *{
     font-family: 'Lato', sans-serif;
+    color: #523A28;
+    font-weight: bold;
 }
 
+html, body{
+    height:100%;
+ }
+ .contenido{
+    min-height:100%;
+    margin:0 auto -142px;
+ }
+ .espacio{
+    height:90px;
+ }
+
+
+ a{
+    text-decoration: none;
+}
+
+img{
+    border-radius: 10px;
+}
+
+.navbar, .dropdown-menu, .footer{
+    background-color: #523A28;
+    color: #D0B49F;
+}
+
+body{
+    background-color: #D0B49F;
+    color: #523A28;
+}
+
+th, th{
+    background-color: #523A28 !important;
+    color: #D0B49F;
+}
 .portada{
     background-size: cover;  
     height: 35rem;
     width: 100%;
     background-image: url(../img/img1.jpg);
     background-attachment: fixed;
+}
+
+.btn-primary{
+background-color: #523A28;
+border: #D0B49F;
+}
+
+.btn-primary:hover{
+    background-color: #A47551;
+    border: 2px #523A28;
+}
+
+.dropdown-item:focus, li:focus{
+ background-color: #A47551 !important;
+}
+
+.main {
+    margin-bottom: 4.5rem !important;
+}
+
+.card{
+    background-color: #523A28;
+    border: none;
+}
+.card:hover{
+    animation-name: aumento;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;    
+}
+@keyframes aumento {
+    100%{
+      transform: scale(1.04);
+      border: none;
+    }
+  }
+
+.card-title, .card-text{
+    color: #D0B49F;
+    text-align: center;
 }

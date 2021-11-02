@@ -8,37 +8,41 @@
   <title>Libreria</title>
   <link rel="icon" href="/img/icono2.png" th:href="@{/img/icono2.png}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
-    <link rel="stylesheet" th:href="@{/style.css}"/>
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 
 
-<body class="bg-dark text-white">
+<body>
+  <div class="contenido">
   <nav th:replace="fragmentos :: navbar"></nav>
+
+  <div th:replace="fragmentos :: div-error"></div>
+  <div th:replace="fragmentos :: div-exito"></div>
 
   <h2 class="text-center mt-5 mb-4">Catalogo de libros</h2>
 
-    <div class="mb-3 mt-3 container-fluid">
+  <div class="mb-3 mt-3 container-fluid">
     <img th:src="@{/img/img6.jpg}" alt="libros" class="m-auto d-block">
-    </div>
+  </div>
 
   <div th:if=${libros.isEmpty()}>
     <p class="ms-5 fs-5">Todavia no hay libros cargados. <a th:href="@{/libros/crear}">Ingresar un libro.</a></p>
   </div>
 
   <div class="table-responsive container-md mt-5" th:unless="${libros.isEmpty()}">
-    <table class="table table-dark table-bordered">
+    <table class="table table-bordered">
       <thead class="table-secondary text-center">
         <tr>
-          <th class="col text-dark">ID</th>
-          <th class="col text-dark">ISBN</th>
-          <th class="col text-dark">Titulo</th>
-          <th class="col text-dark">Año</th>
-          <th class="col text-dark">Autor</th>
-          <th class="col text-dark">Editorial</th>
-          <th class="col text-dark">Ejemplares disponibles</th>
-          <th class="col text-dark">Estado</th>
-          <th class="col text-dark">Acciones</th>
+          <th class="col">ID</th>
+          <th class="col">ISBN</th>
+          <th class="col">Titulo</th>
+          <th class="col">Año</th>
+          <th class="col">Autor</th>
+          <th class="col">Editorial</th>
+          <th class="col">Ejemplares disponibles</th>
+          <th class="col">Estado</th>
+          <th class="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -65,8 +69,6 @@
         </tr>
       </tbody>
     </table>
-    <div th:replace="fragmentos :: div-error"></div>
-    <div th:replace="fragmentos :: div-exito"></div>
   </div>
 
 
@@ -75,6 +77,19 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+  <!-- Cerrar alertas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+  </script>
+  <script type="text/javascript">
+    setTimeout(function () {
+      $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(".alert").remove();
+      });
+    }, 2000);
+  </script>
+  <div class="espacio">
+  </div>
+  </div>
 </body>
 
 </html>

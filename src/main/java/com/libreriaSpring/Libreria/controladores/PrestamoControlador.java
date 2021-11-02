@@ -50,9 +50,9 @@ public class PrestamoControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente, RedirectAttributes a) throws ErrorServicio {
+    public RedirectView guardar(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaPrestamo, @RequestParam("libro") Integer idLibro, @RequestParam("cliente") Integer idCliente, RedirectAttributes a) throws ErrorServicio {
         try {
-            ps.crearPrestamo(idLibro, idCliente);
+            ps.crearPrestamo(fechaPrestamo, idLibro, idCliente);
             a.addFlashAttribute("exito", "El prestamo se ingresó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());

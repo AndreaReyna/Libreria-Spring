@@ -27,6 +27,7 @@ public class LibroServicio {
     public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial) throws ErrorServicio {
         validarTitulo(titulo);
         validarIsbn(isbn);
+        validaraAnio(anio);
 
         Libro libro = new Libro();
 
@@ -59,6 +60,8 @@ public class LibroServicio {
             if (titulo == null || titulo.trim().isEmpty()) {
             throw new ErrorServicio("El titulo del libro no puede estar vacio.");
         }
+       
+        validaraAnio(anio);
         
         Libro libro = buscarPorId(id);
         libro.setTitulo(titulo);
@@ -97,6 +100,13 @@ public class LibroServicio {
 
         if ((lr.buscarIsbn(isbn) != null)) {
             throw new ErrorServicio("El libro ya se encuentra registrado con ese ISBN.");
+        }
+       
+    }
+    
+    public void validaraAnio(Integer anio) throws ErrorServicio {
+        if (anio > 2021) {
+            throw new ErrorServicio("El año no puede ser mayor al actual.");
         }
     }
 }

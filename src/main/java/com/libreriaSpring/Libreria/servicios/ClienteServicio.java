@@ -64,5 +64,15 @@ public class ClienteServicio {
         if ((cr.buscarDni(dni) != null)) {
             throw new ErrorServicio("El DNI ya se encuentra registrado.");
         }
+
+        if ((dni.toString().length()!=8)) {
+            throw new ErrorServicio("El DNI debe tener 8 digitos");
+        }
     }
+    
+    public void validarTel(String tel) throws ErrorServicio {
+        if (tel.length()<6) {
+            throw new ErrorServicio("El telefono debe tener al menos 6 digitos");
+        }
+    }   
 }

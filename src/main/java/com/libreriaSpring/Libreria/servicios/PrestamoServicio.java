@@ -25,10 +25,10 @@ public class PrestamoServicio {
     private LibroRepositorio lr;
 
     @Transactional
-    public void crearPrestamo(Integer idLibro, Integer idCliente) throws ErrorServicio {
+    public void crearPrestamo(Date fecha, Integer idLibro, Integer idCliente) throws ErrorServicio {
         Prestamo p = new Prestamo();
         p.setFechaDevolucion(null);
-        p.setFechaPrestamo(new Date());
+        p.setFechaPrestamo(fecha);
         p.setCliente(cr.findById(idCliente).orElse(null));
         p.setLibro(lr.findById(idLibro).orElse(null));
 

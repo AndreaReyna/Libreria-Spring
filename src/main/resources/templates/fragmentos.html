@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top p-3">
+<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark sticky-top p-3">
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -67,11 +67,11 @@
   </div>
 </nav>
 
-<footer th:fragment="footer" class="p-5 text-center mt-5 ">
-  <p>Andrea Reyna. 2021.</p>
+<footer th:fragment="footer" class="text-center mt-5 footer fixed-bottom py-3">
+  <p class="footer">Andrea Reyna. 2021.</p>
 </footer>
 
-<div th:fragment="div-error" th:if=${error!=null} class="alert alert-danger mt-4 col-xl-6" th:text="${error}"></div>
-<div th:fragment="div-exito" th:if=${exito!=null} class="alert alert-success mt-4 col-xl-6" th:text="${exito}"></div>
+<div th:fragment="div-error" th:if=${error!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${error}"></div>
+<div th:fragment="div-exito" th:if=${exito!=null} class="alert alert-dismissible alert-success mt-4 col-xl-6 text-align:center container" th:text="${exito}"></div>
 
 </html>
