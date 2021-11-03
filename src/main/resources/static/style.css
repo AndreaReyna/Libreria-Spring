@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+
 *{
     font-family: 'Lato', sans-serif;
     color: #523A28;
@@ -16,13 +19,28 @@ html, body{
     height:90px;
  }
 
-
  a{
     text-decoration: none;
 }
 
+h1{
+    font-family: 'Dancing Script', cursive;
+}
+
+h2{
+    font-weight: bold;
+    font-family: 'Merriweather', serif;
+}
+
 img{
     border-radius: 10px;
+}
+
+.sombreado{
+    -webkit-box-shadow: 11px 10px 19px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 11px 10px 19px -5px rgba(0,0,0,0.75);
+    box-shadow: 11px 10px 19px -5px rgba(0,0,0,0.75);
+    min-width: 330px;
 }
 
 .navbar, .dropdown-menu, .footer{
@@ -52,10 +70,16 @@ background-color: #523A28;
 border: #D0B49F;
 }
 
-.btn-primary:hover{
+.btn-primary:hover, .btn-primary:focus{
     background-color: #A47551;
     border: 2px #523A28;
 }
+
+.btn-secondary{
+    background-color: #A47551    ;
+    border: #D0B49F;
+    }  
+
 
 .dropdown-item:focus, li:focus{
  background-color: #A47551 !important;

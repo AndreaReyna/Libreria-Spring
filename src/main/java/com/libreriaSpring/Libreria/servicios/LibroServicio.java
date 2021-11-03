@@ -27,8 +27,9 @@ public class LibroServicio {
     public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial) throws ErrorServicio {
         validarTitulo(titulo);
         validarIsbn(isbn);
-        validaraAnio(anio);
-
+        validarAnio(anio);
+        validarEj(ejemplares);
+        
         Libro libro = new Libro();
 
         libro.setIsbn(isbn);
@@ -56,16 +57,19 @@ public class LibroServicio {
     }
 
     @Transactional
-    public void modificar(Integer id, String titulo, Integer anio, Integer idAutor, Integer idEd) throws ErrorServicio {
+    public void modificar(Integer id, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEd) throws ErrorServicio {
             if (titulo == null || titulo.trim().isEmpty()) {
             throw new ErrorServicio("El titulo del libro no puede estar vacio.");
         }
        
-        validaraAnio(anio);
+        validarAnio(anio);
+        validarEj(ejemplares);
         
         Libro libro = buscarPorId(id);
         libro.setTitulo(titulo);
-        libro.setAnio(anio);
+        libro.setAnio(anio);        
+        libro.setEjemplares(ejemplares);
+        libro.setEjemplaresRestantes(ejemplares-libro.getEjemplaresPrestados());
         libro.setAutor(ar.findById(idAutor).orElse(null));
         libro.setEditorial(er.findById(idEd).orElse(null));
         lr.save(libro);
@@ -104,9 +108,15 @@ public class LibroServicio {
        
     }
     
-    public void validaraAnio(Integer anio) throws ErrorServicio {
+    public void validarAnio(Integer anio) throws ErrorServicio {
         if (anio > 2021) {
             throw new ErrorServicio("El año no puede ser mayor al actual.");
+        }
+    }
+    
+        public void validarEj(Integer ej) throws ErrorServicio {
+        if (ej < 1) {
+            throw new ErrorServicio("Debe ingresar al menos un ejemplar.");
         }
     }
 }
