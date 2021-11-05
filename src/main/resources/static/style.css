@@ -11,6 +11,7 @@
 html, body{
     height:100%;
  }
+
  .contenido{
     min-height:100%;
     margin:0 auto -142px;
@@ -102,6 +103,7 @@ border: #D0B49F;
     100%{
       transform: scale(1.04);
       border: none;
+      color: black;
     }
   }
 
@@ -109,3 +111,48 @@ border: #D0B49F;
     color: #D0B49F;
     text-align: center;
 }
+
+
+
+
+/*LOGIN*/
+.todo-login{
+    background-image: url(img/img1.jpg);
+    background-size: cover;
+    filter:brightness(0.9);
+}
+
+
+.div-login{
+    height: 40rem;
+}
+
+.form-login{
+    background-color: rgba(0,0,0, .9);
+    padding: 5rem;
+    padding-top: 7rem;
+    border-radius: 20px;
+}
+
+.h2-login{
+    color: #f0dbcb;
+}
+
+.nav-item-login{
+    background-color: #D0B49F;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.nav-link-login{
+    color: #523A28;
+    font-weight: bold;
+}
+
+.nav-link-login:hover, .nav-item-login:hover{
+    color: #523A28;
+    animation-name: aumento;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;   
+}
+

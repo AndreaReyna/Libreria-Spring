@@ -34,6 +34,12 @@ public class AutorServicio {
         Optional<Autor> autorOptional = AutorRepositorio.findById(id);
         return autorOptional.orElse(null);
     }
+    
+        @Transactional(readOnly = true)
+        public Autor buscarPorNombre(String nombre) {
+        Autor autor = AutorRepositorio.buscarNombre(nombre);
+        return autor;
+    }
 
     @Transactional
     public void modificar(Integer id, String nombre) throws ErrorServicio {

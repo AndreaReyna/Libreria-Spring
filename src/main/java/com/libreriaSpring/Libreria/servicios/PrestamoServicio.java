@@ -74,6 +74,7 @@ public class PrestamoServicio {
         if (fechaDevolucion.after(d)) {
             throw new ErrorServicio("La fecha de devolucion no puede ser posterior al dia de hoy.");
         }
+        
         pr.baja(id, false, fechaDevolucion);
 
         Libro l = p.getLibro();
