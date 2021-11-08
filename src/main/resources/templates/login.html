@@ -36,11 +36,11 @@
     <form id="formulario" class="needs-validation mb-4 form-login" th:action="@{/logincheck}" method="POST" novalidate>
       <h2 class="fs-3 text-center fw-bold mb-5 h2-login">Iniciar Sesión</h2>
       <div class="p-0 mb-5 mt-2">
-      <input type="email" name="correo" id="correo" placeholder="Correo electronico" class="form-control-lg border-0 bg-dark text-white" required> <br>
+      <input type="email" name="correo" id="correo" placeholder="Correo electronico" class="form-control-lg border-0" required> <br>
       <div class="invalid-feedback text-center">El correo es obligatorio</div>
     </div>
     <div class="mb-5">
-      <input type="password" name="clave" id="clave" placeholder="Contraseña" class="form-control-lg border-0 bg-dark text-white" required> <br>
+      <input type="password" name="clave" id="clave" placeholder="Contraseña" class="form-control-lg border-0" required> <br>
       <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
     </div>
       <div class="d-flex justify-content-center mt-4">

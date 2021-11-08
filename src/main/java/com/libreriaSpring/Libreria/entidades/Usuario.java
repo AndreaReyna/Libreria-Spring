@@ -3,13 +3,17 @@ package com.libreriaSpring.Libreria.entidades;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.springframework.data.annotation.CreatedDate;
+
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class) 
 public class Usuario {
 
     @Id
@@ -24,9 +28,11 @@ public class Usuario {
     private String correo;
     @Column(nullable = false)
     private String clave;
+   
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false, nullable = false)
     private LocalDateTime creacion;
+    
     @LastModifiedDate
     private LocalDateTime modificacion;
 

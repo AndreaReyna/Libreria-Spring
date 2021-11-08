@@ -16,80 +16,96 @@
 <body>
   <div class="contenido todo-registro">
 
-    <nav class="navbar navbar-expand-sm navbar-dark sticky-top p-0">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-around fs-4" id="collapsibleNavbar">
-          <a class="nav-link" th:href="@{/}"><img th:src="@{/img/logo.jpg}" alt="" class="navbar-brand logo img-fluid ms-5"></a>
-          <ul class="navbar-nav">
-            <li class="nav-item-login me-4">
-              <a class="nav-link-login" th:href="@{/login}" id="registrarse">
-                Iniciar Sesión
-              </a>
-            </li>
-         </ul>
+    <nav class="navbar navbar-expand-sm navbar-dark sticky-top p-0 mb-3">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-around fs-4" id="collapsibleNavbar">
+        <a class="nav-link" th:href="@{/}"><img th:src="@{/img/logo.jpg}" alt=""
+            class="navbar-brand logo img-fluid ms-5"></a>
+        <ul class="navbar-nav">
+          <li class="nav-item-login me-4">
+            <a class="nav-link-login" th:href="@{/login}" id="iniciarSesion">
+              Iniciar Sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="w-100 d-flex align-items-center justify-content-center div-registro">
+      <form id="formulario" class="needs-validation mb-4 form-login mt-5" th:action="@{/registro}" method="POST"
+        novalidate>
+        <h2 class="fs-3 text-center fw-bold mb-5 h2-login">Registro</h2>
+
+        <div class="p-0 mb-5 mt-2">
+          <input type="text" name="nombre" id="nombre" placeholder="Nombre" th:value="${nombre}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">El nombre es obligatorio</div>
         </div>
-      </nav>
-    
 
-  
-      <!--  <div class="w-100 d-flex align-items-center justify-content-center div-login">
-    <form id="formulario" class="needs-validation mb-4 form-login" th:action="@{/logincheck}" method="POST" novalidate>
-      <h2 class="fs-3 text-center fw-bold mb-5 h2-login">Registrarse</h2>
-      <div class="p-0 mb-5 mt-2">
-      <input type="email" name="correo" id="correo" placeholder="Correo electronico" class="form-control-lg border-0 bg-dark text-white" required> <br>
-      <div class="invalid-feedback text-center">El correo es obligatorio</div>
+        <div class="mb-5">
+          <input type="text" name="apellido" id="apellido" placeholder="Apellido" th:value="${apellido}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">El apellido es obligatorio</div>
+        </div>
+
+        <div class="mb-5">
+          <input type="email" name="correo" id="correo" placeholder="Correo electronico" th:value="${correo}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">El correo es obligatorio</div>
+        </div>
+
+        <div class="mb-5">
+          <input type="password" name="clave" id="clave" placeholder="Contraseña" th:value="${clave}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+          <button type="submit" class="btn-lg btn-primary w-100">Registrarse</button>
+        </div>
+      </form>
     </div>
-    <div class="mb-5">
-      <input type="password" name="clave" id="clave" placeholder="Contraseña" class="form-control-lg border-0 bg-dark text-white" required> <br>
-      <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
-    </div>
-      <div class="d-flex justify-content-center mt-4">
-      <button type="submit" class="btn-lg btn-primary w-100 ">Registrarse</button>    
-    </div>
-  </form>
-</div>  --> 
 
 
-<div th:replace="fragmentos :: div-error"></div>
-<div th:replace="fragmentos :: div-exito"></div>
-
- 
-<footer th:replace="fragmentos :: footer"></footer>
+    <div th:replace="fragmentos :: div-error"></div>
+    <div th:replace="fragmentos :: div-exito"></div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <!-- Cerrar alertas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
-  </script>
-  <script type="text/javascript">
-    setTimeout(function () {
-      $(".alert").fadeTo(500, 0).slideUp(500, function () {
-        $(".alert").remove();
-      });
-    }, 2000);
-  </script>
-  <script>
-    (() => {
+    <footer th:replace="fragmentos :: footer"></footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+    <!-- Cerrar alertas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+    </script>
+    <script type="text/javascript">
+      setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+          $(".alert").remove();
+        });
+      }, 2000);
+    </script>
+    <script>
+      (() => {
         "use strict";
         const form = document.getElementById("formulario");
         form.addEventListener("submit", (event) => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
 
-            form.classList.add("was-validated");
+          form.classList.add("was-validated");
         }, false);
-    })()
-</script>
+      })()
+    </script>
     <div class="espacio">
     </div>
-    
-    </div>
+  </div>
 </body>
 
 </html>

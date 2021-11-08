@@ -122,7 +122,6 @@ border: #D0B49F;
     filter:brightness(0.9);
 }
 
-
 .div-login{
     height: 40rem;
 }
@@ -156,3 +155,15 @@ border: #D0B49F;
     animation-fill-mode: forwards;   
 }
 
+.div-registro{
+    height: 45rem;
+}
+
+.nav-link-logout{
+    color:#D0B49F;
+
+}
+
+.nav-item-logout:hover, .nav-link-logout:hover{ 
+    color: white;
+}
