@@ -1,6 +1,7 @@
 package com.libreriaSpring.Libreria.servicios;
 
 import Excepciones.ErrorServicio;
+import com.libreriaSpring.Libreria.entidades.Autor;
 import java.util.List;
 import com.libreriaSpring.Libreria.entidades.Libro;
 import com.libreriaSpring.Libreria.repositorios.AutorRepositorio;
@@ -19,16 +20,24 @@ public class LibroServicio {
 
     @Autowired
     private AutorRepositorio ar;
+    private AutorServicio as;
 
     @Autowired
     private EditorialRepositorio er;
 
     @Transactional
-    public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial) throws ErrorServicio {
+    public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial, String nombreAutor) throws ErrorServicio {
         validarTitulo(titulo);
         validarIsbn(isbn);
         validarAnio(anio);
         validarEj(ejemplares);
+       
+        if (idAutor==null) {
+            as.crear(nombreAutor);
+        }
+        
+        
+        
         
         Libro libro = new Libro();
 

@@ -67,7 +67,6 @@ public class LibroControlador {
             a.addFlashAttribute("error", e.getMessage());
             return new RedirectView("/libros/crear");
         }
-
         return new RedirectView("/libros");
     }
 

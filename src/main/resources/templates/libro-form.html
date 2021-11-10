@@ -57,7 +57,7 @@
                     <option class="text-black" th:each="autor : ${autores}" th:text="|${autor.nombre}|"
                     th:if="${autor.alta or action == 'modificar'}" th:value="${autor.id}"></option>
                 </select>
-                <div class="invalid-feedback">El autor es obligatorio</div>
+                <div class="invalid-feedback">El autor es obligatorio</div>                
             </div>
 
             <div class="form mb-3 col-xl-6 fs-5">
