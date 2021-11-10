@@ -52,10 +52,9 @@ public class AutorControlador {
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editarAutor(@PathVariable Integer id, RedirectAttributes a) {
+    public ModelAndView editarAutor(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("autor-form");
         mav.addObject("autor", autorServicio.buscarPorId(id));
-        a.addFlashAttribute("nombre", autorServicio.buscarPorId(id).getNombre());
         mav.addObject("title", "Editar Autor");
         mav.addObject("action", "modificar");
         return mav;

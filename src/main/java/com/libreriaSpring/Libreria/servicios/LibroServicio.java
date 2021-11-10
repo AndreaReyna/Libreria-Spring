@@ -20,25 +20,17 @@ public class LibroServicio {
 
     @Autowired
     private AutorRepositorio ar;
-    private AutorServicio as;
 
     @Autowired
     private EditorialRepositorio er;
 
     @Transactional
-    public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial, String nombreAutor) throws ErrorServicio {
+    public void crear(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer idAutor, Integer idEditorial) throws ErrorServicio {
         validarTitulo(titulo);
         validarIsbn(isbn);
         validarAnio(anio);
         validarEj(ejemplares);
-       
-        if (idAutor==null) {
-            as.crear(nombreAutor);
-        }
-        
-        
-        
-        
+
         Libro libro = new Libro();
 
         libro.setIsbn(isbn);
