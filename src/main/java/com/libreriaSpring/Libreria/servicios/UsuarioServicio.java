@@ -38,6 +38,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
     
+    @Autowired
+    private EmailServicio es;
+      
     @Transactional
     public void crear(String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol) throws Exception {
         
@@ -52,8 +55,8 @@ public class UsuarioServicio implements UserDetailsService {
         
         u.setAlta(true);
         ur.save(u);
-        
         cs.crear(dni, nombre, apellido, tel, correo);
+        es.enviarThread(correo);
     }
     
     @Override
