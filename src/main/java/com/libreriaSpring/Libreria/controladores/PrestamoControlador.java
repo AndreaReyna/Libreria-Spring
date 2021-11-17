@@ -8,6 +8,7 @@ import com.libreriaSpring.Libreria.servicios.PrestamoServicio;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,6 +63,7 @@ public class PrestamoControlador {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarPrestamo(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("prestamo-form");
         mav.addObject("prestamo", ps.buscarPorId(id));
@@ -71,6 +73,7 @@ public class PrestamoControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView eliminar(@RequestParam Integer id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDevolucion, RedirectAttributes a) throws ErrorServicio {
         try {
             ps.baja(id, fechaDevolucion);

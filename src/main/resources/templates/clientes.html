@@ -36,6 +36,8 @@
           <th class="col">Nombre</th>
           <th class="col">Apellido</th>
           <th class="col">Telefono</th>
+          <th class="col">Correo</th>
+          <th class="col">Rol</th>
           <th class="col">Estado</th>
           <th class="col">Acciones</th>
         </tr>
@@ -48,6 +50,8 @@
             <td class="col" th:text="${c.nombre}"></td>
             <td class="col" th:text="${c.apellido}"></td>
             <td class="col" th:text="${c.telefono}"></td>
+            <td class="col" th:text="${c.usuario.correo}"></td>
+            <td class="col" th:text="${c.usuario.rol.nombre}"></td>
             <td class="col" th:text="${c.alta} ? 'Activo' : 'Baja'"></td>
             <td class="col d-flex justify-content-center">
               <a class="btn btn-primary me-4" th:href="@{/clientes/editar/__${c.id}__}">Editar</a>

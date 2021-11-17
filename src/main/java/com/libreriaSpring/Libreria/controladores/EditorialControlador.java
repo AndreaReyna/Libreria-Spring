@@ -4,6 +4,7 @@ import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Editorial;
 import com.libreriaSpring.Libreria.servicios.EditorialServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,7 @@ public class EditorialControlador {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarEd(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("ed-form");
         mav.addObject("ed", es.buscarPorId(id));
@@ -60,6 +62,7 @@ public class EditorialControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
         try {
             es.modificar(id, nombre);
@@ -71,12 +74,14 @@ public class EditorialControlador {
     }
 
     @PostMapping("/baja/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView baja(@PathVariable Integer id) {
         es.baja(id);
         return new RedirectView("/editoriales");
     }
 
     @PostMapping("/alta/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView alta(@PathVariable Integer id) {
         es.alta(id);
         return new RedirectView("/editoriales");

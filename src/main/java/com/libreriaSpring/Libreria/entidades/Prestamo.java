@@ -23,7 +23,7 @@ public class Prestamo {
     private Libro libro;
     @ManyToOne //El cliente puede tener varios prestamos...
     private Cliente cliente;
-    Boolean alta;
+    private Boolean alta;
 
     public Prestamo() {
     }

@@ -51,6 +51,18 @@
         </div>
 
         <div class="mb-5">
+          <input type="number" name="documento" id="documento" placeholder="DNI" th:value="${documento}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">El documento es obligatorio</div>
+        </div>
+
+        <div class="mb-5">
+          <input type="number" name="telefono" id="telefono" placeholder="Telefono" th:value="${telefono}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">El telefono es obligatorio</div>
+        </div>
+
+        <div class="mb-5">
           <input type="email" name="correo" id="correo" placeholder="Correo electronico" th:value="${correo}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El correo es obligatorio</div>
@@ -60,6 +72,12 @@
           <input type="password" name="clave" id="clave" placeholder="Contraseña" th:value="${clave}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
+        </div>
+
+        <div class="mb-5">
+          <input type="password" name="clave2" id="clave2" placeholder="Confirmación" th:value="${clave2}"
+            class="form-control-lg border-0" required> <br>
+          <div class="invalid-feedback text-center">Debe repetir la contraseña.</div>
         </div>
 
         <div class="d-flex justify-content-center mt-4">

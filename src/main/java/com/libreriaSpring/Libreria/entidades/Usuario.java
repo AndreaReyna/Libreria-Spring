@@ -7,6 +7,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
 
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,10 +21,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(nullable = false)
-    private String nombre;
-    @Column(nullable = false)
-    private String apellido;
     @Column(nullable = false, unique = true)
     private String correo;
     @Column(nullable = false)
@@ -37,19 +34,21 @@ public class Usuario {
     private LocalDateTime modificacion;
 
     private Boolean alta;
+    
+    @ManyToOne
+    private Rol rol;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nombre, String apellido, String correo, String clave, LocalDateTime creacion, LocalDateTime modificacion, Boolean alta) {
+    public Usuario(Integer id, String correo, String clave, LocalDateTime creacion, LocalDateTime modificacion, Boolean alta, Rol rol) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
         this.correo = correo;
         this.clave = clave;
         this.creacion = creacion;
         this.modificacion = modificacion;
         this.alta = alta;
+        this.rol = rol;
     }
 
     public Integer getId() {
@@ -58,22 +57,6 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getCorreo() {
@@ -116,4 +99,11 @@ public class Usuario {
         this.alta = alta;
     }
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
 }

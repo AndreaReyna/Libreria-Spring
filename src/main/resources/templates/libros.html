@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -42,7 +42,7 @@
           <th class="col">Editorial</th>
           <th class="col">Ejemplares disponibles</th>
           <th class="col">Estado</th>
-          <th class="col">Acciones</th>
+          <th sec:authorize="hasRole('ADMIN')" class="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -56,7 +56,7 @@
             <td class="col" th:text="${l.editorial.nombre}"></td>
             <td class="col" th:text="${l.ejemplaresRestantes}"></td>
             <td class="col" th:text="${l.alta} ? 'Activo' : 'Baja'"></td>
-            <td class="col d-flex justify-content-center">
+            <td sec:authorize="hasRole('ADMIN')" class="col d-flex justify-content-center">
               <a class="btn btn-primary me-4" th:href="@{/libros/editar/__${l.id}__}">Editar</a>
               <form th:if=${l.alta} method="post" th:action="@{/libros/baja/__${l.id}__}">
                 <button class="btn btn-danger" type="submit">Dar de baja</button>

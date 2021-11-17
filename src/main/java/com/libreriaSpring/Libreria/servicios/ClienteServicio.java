@@ -4,6 +4,7 @@ import Excepciones.ErrorServicio;
 import java.util.List;
 import com.libreriaSpring.Libreria.entidades.Cliente;
 import com.libreriaSpring.Libreria.repositorios.ClienteRepositorio;
+import com.libreriaSpring.Libreria.repositorios.UsuarioRepositorio;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +15,21 @@ public class ClienteServicio {
 
     @Autowired
     private ClienteRepositorio cr;
+    
+    @Autowired
+    private UsuarioRepositorio ur;
 
     @Transactional
-    public void crear(Long documento, String nombre, String apellido, String tel) throws ErrorServicio {
-
-        validar(documento);
+    public void crear(Long documento, String nombre, String apellido, String tel, String correo) throws ErrorServicio {
 
         Cliente c = new Cliente();
         c.setDocumento(documento);
         c.setNombre(nombre);
         c.setApellido(apellido);
         c.setTelefono(tel);
+        c.setUsuario(ur.findByCorreo(correo).orElse(null));
         c.setAlta(true);
+
         cr.save(c);
     }
 

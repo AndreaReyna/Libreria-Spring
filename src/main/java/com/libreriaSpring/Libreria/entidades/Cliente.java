@@ -1,9 +1,11 @@
 package com.libreriaSpring.Libreria.entidades;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cliente {
@@ -11,22 +13,29 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private Long documento;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String apellido;
     private String telefono;
     private Boolean alta;
-
+    
+    @OneToOne
+    private Usuario usuario;
+    
     public Cliente() {
     }
 
-    public Cliente(Integer id, Long documento, String nombre, String apellido, String telefono, Boolean alta) {
+    public Cliente(Integer id, Long documento, String nombre, String apellido, String telefono, Boolean alta, Usuario usuario) {
         this.id = id;
         this.documento = documento;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.alta = alta;
+        this.usuario = usuario;
     }
 
     public Integer getId() {
@@ -77,4 +86,12 @@ public class Cliente {
         this.alta = alta;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
 }

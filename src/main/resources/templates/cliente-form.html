@@ -40,14 +40,42 @@
                 <label for="apellido">Apellido: </label> <br>
                 <input class="form-control text-dark" id="apellido" placeholder="Apellido" required
                     th:field="*{apellido}" type="text" />
-                <div class="invalid-feedback">El año es obligatorio</div>
+                <div class="invalid-feedback">El apellido es obligatorio</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
-                <label for="ejemplares">Telefono: </label> <br>
+                <label for="telefono">Telefono: </label> <br>
                 <input class="form-control text-dark" id="telefono" placeholder="Telefono" required
                     th:field="*{telefono}" type="text" />
                 <div class="invalid-feedback">El telefono es obligatorio</div>
             </div>
+            <div class="form mb-3 col-xl-6 fs-5">
+                <label for="correo">Correo: </label> <br>
+                <input class="form-control text-dark" id="correo" placeholder="Correo"
+                th:value="${correo}" name="correo" type="email"/>
+                <div class="invalid-feedback">El telefono es obligatorio</div>
+            </div>
+            <div class="form mb-3 col-xl-6 fs-5">
+                <label for="clave">Nueva clave: </label> <br>
+                <input class="form-control text-dark" id="clave" placeholder="Clave" required
+                th:value="${clave}" type="password" name="clave"/>
+                <div class="invalid-feedback">La contraseña es obligatoria</div>
+            </div>
+            <div class="form mb-3 col-xl-6 fs-5">
+                <label for="clave2">Repita la clave: </label> <br>
+                <input class="form-control text-dark" id="clave2" placeholder="Clave" required
+                    th:value="${clave2}" type="password" name="clave2" />
+                <div class="invalid-feedback">Debe repetir la contraseña</div>
+            </div>
+            <div class="form mb-3 col-xl-6 fs-5">
+                <label for="rol">Rol:</label> <br>
+                <select aria-label="Elegir rol" class="form-select" id="rol" required name="idRol">
+                    <option selected value="">Elegir rol</option>
+                    <option class="text-black" th:each="rol : ${roles}" th:text="|${rol.nombre}|"
+                    th:value="${rol.id}"></option>
+                </select>
+                <div class="invalid-feedback">El rol es obligatorio</div>             
+            </div>
+
             <div class="row">
                 <div class="col">
                     <button class="btn btn-primary"

@@ -1,9 +1,17 @@
 package com.libreriaSpring.Libreria.servicios;
 
+import Excepciones.ErrorServicio;
+import com.libreriaSpring.Libreria.entidades.Cliente;
 import com.libreriaSpring.Libreria.entidades.Usuario;
+import com.libreriaSpring.Libreria.repositorios.ClienteRepositorio;
+import com.libreriaSpring.Libreria.repositorios.RolRepositorio;
 import com.libreriaSpring.Libreria.repositorios.UsuarioRepositorio;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,31 +22,163 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioServicio implements UserDetailsService {
-
+    
     @Autowired
     private UsuarioRepositorio ur;
-
+    
+    @Autowired
+    private RolRepositorio rr;
+    
+    @Autowired
+    private ClienteRepositorio cr;
+    
+    @Autowired
+    private ClienteServicio cs;
+    
     @Autowired
     private BCryptPasswordEncoder encoder;
-
+    
     @Transactional
-    public void crear(String nombre, String apellido, String correo, String clave) throws Exception {
-        if (ur.existsUsuarioByCorreo(correo)) {
-            throw new Exception("Ya existe un usuario asociado al correo ingresado");
-        }
-
+    public void crear(String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol) throws Exception {
+        
+        validarMail(correo);
+        validarDNI(dni);
+        validaciones(nombre, apellido, tel, clave, clave2);
+        
         Usuario u = new Usuario();
-        u.setNombre(nombre);
-        u.setApellido(apellido);
         u.setCorreo(correo);
         u.setClave(encoder.encode(clave));
+        u.setRol(rr.getById(idRol));
+        
         u.setAlta(true);
         ur.save(u);
+        
+        cs.crear(dni, nombre, apellido, tel, correo);
     }
-
+    
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Usuario usuario = ur.findByCorreo(correo).orElseThrow(() -> new UsernameNotFoundException("No existe un usuario asociado al correo ingresado"));
-        return new User(usuario.getCorreo(), usuario.getClave(), Collections.emptyList());
+        
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().getNombre());
+        
+        return new User(usuario.getCorreo(), usuario.getClave(), Collections.singletonList(authority));
     }
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> buscarTodos() {
+        return ur.findAll();
+    }
+    
+    @Transactional(readOnly = true)
+    public Usuario buscarPorId(Integer id) {
+        Optional<Usuario> uOptional = ur.findById(id);
+        return uOptional.orElse(null);
+    }
+    
+    @Transactional(readOnly = true)
+    public Usuario buscarPorCorreo(String correo) {
+        Optional<Usuario> uOptional = ur.findByCorreo(correo);
+        return uOptional.orElse(null);
+    }
+    
+    @Transactional
+    public void modificar(Integer idCliente, String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol) throws Exception {
+        
+        Cliente c = cs.buscarPorId(idCliente);
+        
+        Usuario u = buscarPorId(c.getUsuario().getId());
+        if (!u.getCorreo().equals(correo)) {
+            validarMail(correo);
+            u.setCorreo(correo);
+        }
+        
+        validaciones(nombre, apellido, tel, clave, clave2);
+        
+        u.setClave(encoder.encode(clave));
+        u.setRol(rr.findById(idRol).orElse(null));
+        u.setAlta(true);
+        ur.save(u);
+        
+        c.setApellido(apellido);
+        c.setNombre(nombre);
+        c.setTelefono(tel);
+        c.setUsuario(u);
+        cr.save(c);
+        
+    }
+    
+    @Transactional
+    public void baja(Integer id) {
+        ur.baja(id, false);
+    }
+    
+    @Transactional
+    public void alta(Integer id) {
+        ur.baja(id, true);
+    }
+    
+    public void validaciones(String nombre, String apellido, String tel, String clave, String clave2) throws ErrorServicio {
+        
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre no puede estar vacio.");
+        }
+        if (apellido == null || apellido.trim().isEmpty()) {
+            throw new ErrorServicio("El apellido no puede estar vacio.");
+        }
+        if (clave.length() < 8) {
+            throw new ErrorServicio("La contraseña debe tener al menos 8 caracteres");
+        }
+        if (!clave.equals(clave2)) {
+            throw new ErrorServicio("Las contraseñas no coinciden");
+        }
+        
+        if (tel.length() < 6) {
+            throw new ErrorServicio("El telefono debe tener al menos 6 digitos");
+        }
+        
+    }
+    
+    public void validarMail(String correo) throws ErrorServicio {
+        if (ur.existsUsuarioByCorreo(correo)) {
+            throw new ErrorServicio("Ya existe un usuario asociado al correo ingresado");
+        }
+    }
+    
+    public void validarDNI(Long dni) throws ErrorServicio {
+        if ((cr.buscarDni(dni) != null)) {
+            throw new ErrorServicio("El DNI ya se encuentra registrado.");
+        }
+        if (dni == 0) {
+            throw new ErrorServicio("El DNI no puede estar vacio.");
+        }
+        
+        if ((dni.toString().length() != 8)) {
+            throw new ErrorServicio("El DNI debe tener 8 digitos");
+        }
+    }
+    
+    @Transactional
+    public void crearAdmin(String correo, String clave, String clave2) throws Exception {
+        if (ur.existsUsuarioByCorreo(correo)) {
+            throw new ErrorServicio("Ya existe un usuario asociado al correo ingresado");
+        }
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new ErrorServicio("El correo no puede estar vacio.");
+        }
+        if (clave.length() < 8) {
+            throw new ErrorServicio("La contraseña debe tener al menos 8 caracteres");
+        }
+        if (!clave.equals(clave2)) {
+            throw new ErrorServicio("Las contraseñas no coinciden");
+        }
+        
+        Usuario u = new Usuario();
+        u.setCorreo(correo);
+        u.setClave(encoder.encode(clave));
+        u.setRol(rr.buscarRol("ADMIN"));
+        u.setAlta(true);
+        ur.save(u);
+    }
+    
 }

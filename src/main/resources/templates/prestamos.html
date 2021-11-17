@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -38,7 +38,7 @@
           <th class="col">Cliente</th>
           <th class="col">Fecha de devolucion</th>
           <th class="col">Estado</th>
-          <th class="col">Acciones</th>
+          <th sec:authorize="hasRole('ADMIN')" class="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +52,7 @@
             </td>
             <td class="col" th:text="${p.fechaDevolucion}"></td>
             <td class="col" th:text="${p.alta} ? 'Activo' : 'Devuelto'"></td>
-            <td class="col d-flex justify-content-center">
+            <td sec:authorize="hasRole('ADMIN')" class="col d-flex justify-content-center">
               <a class="btn btn btn-danger me-4" th:if=${p.alta} th:href="@{/prestamos/editar/__${p.id}__}">Dar de
                 baja</a>
             </td>

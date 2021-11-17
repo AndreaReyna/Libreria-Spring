@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -45,7 +45,7 @@
    </div>
 
 <div class="container align-items-center mt-5 mb-3">
- <div class="row row-cols-1 row-cols-md-3 g-4" >
+ <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center" >
 
     <div class="col">
        <a th:href="@{/autores}"><div class="card h-100">
@@ -67,7 +67,8 @@
      </div>
    </div></a>
 
-   <div class="col">
+
+    <div sec:authorize="hasRole('ADMIN')" class="col">
     <a th:href="@{/clientes}"><div class="card h-100">
      <img th:src="@{/img/img15.jpg}" class="card-img-top" alt="clientes">
      <div class="card-body">
@@ -75,7 +76,6 @@
        <p class="card-text fs-5">En esta seccion puede ver la lista de clientes registrados para realizar prestamos</p>
      </div>
    </div></a>
-
   </div>
 </div>
 

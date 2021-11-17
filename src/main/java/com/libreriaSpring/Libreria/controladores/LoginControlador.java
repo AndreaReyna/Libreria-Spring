@@ -15,16 +15,16 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class UsuarioControlador {
-    
+public class LoginControlador {
+
     @Autowired
     private UsuarioServicio us;
-    
+
     @GetMapping("/login")
-    public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal){
-        
+    public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal) {
+
         ModelAndView mv = new ModelAndView("login");
-        if (error != null){
+        if (error != null) {
             mv.addObject("error", "Correo o contraseña incorrecta");
         }
         if (logout != null) {
@@ -35,45 +35,50 @@ public class UsuarioControlador {
         }
         return mv;
     }
-    
+
     @GetMapping("/signup")
-    public ModelAndView signup(HttpServletRequest request, Principal principal){
+    public ModelAndView signup(HttpServletRequest request, Principal principal) {
         ModelAndView mv = new ModelAndView("signup");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        
+
         if (flashMap != null) {
             mv.addObject("exito", flashMap.get("exito"));
             mv.addObject("error", flashMap.get("error"));
             mv.addObject("nombre", flashMap.get("nombre"));
             mv.addObject("apellido", flashMap.get("apellido"));
+            mv.addObject("documento", flashMap.get("documento"));
+            mv.addObject("telefono", flashMap.get("telefono"));
             mv.addObject("correo", flashMap.get("correo"));
             mv.addObject("clave", flashMap.get("clave"));
-                        
         }
-        
+
         if (principal != null) {
             mv.setViewName("redirect:/");
         }
         return mv;
-     }
-    
+    }
+
     @PostMapping("/registro")
-    public RedirectView signup(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String correo, @RequestParam String clave, RedirectAttributes a){
-            RedirectView rw = new RedirectView("/login");
-            
-            try {
-            us.crear(nombre, apellido, correo, clave);
+    public RedirectView signup(@RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, HttpServletRequest request, RedirectAttributes a) {
+        RedirectView rw = new RedirectView("/login");
+
+        try {
+            us.crear(nombre, apellido, documento, clave2, correo, clave, clave2, 2);
+
             a.addFlashAttribute("exito", "El registro fue exitoso");
-            
+
+            request.login(correo, clave);
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
             a.addFlashAttribute("nombre", nombre);
             a.addFlashAttribute("apellido", apellido);
+            a.addFlashAttribute("documento", documento);
+            a.addFlashAttribute("telefono", telefono);
             a.addFlashAttribute("correo", correo);
-            a.addFlashAttribute("clave", clave);
-            
+
             rw.setUrl("/signup");
-        }  
-            return rw;
+        }
+        return rw;
     }
+    
 }

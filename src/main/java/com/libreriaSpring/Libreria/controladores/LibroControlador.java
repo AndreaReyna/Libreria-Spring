@@ -6,6 +6,7 @@ import com.libreriaSpring.Libreria.servicios.AutorServicio;
 import com.libreriaSpring.Libreria.servicios.EditorialServicio;
 import com.libreriaSpring.Libreria.servicios.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ public class LibroControlador {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarLibro(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("libro-form");
         mav.addObject("libro", ls.buscarPorId(id));
@@ -71,6 +73,7 @@ public class LibroControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
         try {
            
@@ -84,12 +87,14 @@ public class LibroControlador {
     }
 
     @PostMapping("/baja/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView baja(@PathVariable Integer id) {
         ls.baja(id);
         return new RedirectView("/libros");
     }
 
     @PostMapping("/alta/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView alta(@PathVariable Integer id) {
         ls.alta(id);
         return new RedirectView("/libros");

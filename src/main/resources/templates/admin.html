@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Admin</title>
+</head>
+<body>
+<form th:action="@{/admin/guardar}" method="POST">
+    <input type="email" name="correo">
+    <input type="password" name="clave">
+    <input type="password" name="clave2">
+    <input type="submit">
+    <div th:replace="fragmentos :: div-error"></div>
+</form>
+</body>
+</html>

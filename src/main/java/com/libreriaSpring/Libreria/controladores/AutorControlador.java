@@ -4,6 +4,7 @@ import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Autor;
 import com.libreriaSpring.Libreria.servicios.AutorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class AutorControlador {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editarAutor(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("autor-form");
         mav.addObject("autor", autorServicio.buscarPorId(id));
@@ -61,6 +63,7 @@ public class AutorControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, RedirectAttributes a) throws ErrorServicio {
         try {
             autorServicio.modificar(id, nombre);
@@ -72,12 +75,14 @@ public class AutorControlador {
     }
 
     @PostMapping("/baja/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView baja(@PathVariable Integer id) {
         autorServicio.baja(id);
         return new RedirectView("/autores");
     }
 
     @PostMapping("/alta/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView alta(@PathVariable Integer id) {
         autorServicio.alta(id);
         return new RedirectView("/autores");
