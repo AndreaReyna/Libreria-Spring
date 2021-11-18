@@ -14,7 +14,7 @@
 
 
 <body>
-  <div class="contenido todo-registro">
+  <div class="contenido todo-login">
 
     <nav class="navbar navbar-expand-sm navbar-dark sticky-top p-0 mb-3">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -34,47 +34,47 @@
     </nav>
 
     <div class="w-100 d-flex align-items-center justify-content-center div-registro">
-      <form id="formulario" class="needs-validation mb-4 form-login mt-5" th:action="@{/registro}" method="POST"
+      <form id="formulario" class="needs-validation form-registro form-control-lg" th:action="@{/registro}" method="POST"
         novalidate>
-        <h2 class="fs-3 text-center fw-bold mb-5 h2-login">Registro</h2>
+        <h2 class="fs-3 text-center mb-3 fw-bold h2-login">Registro</h2>
 
-        <div class="p-0 mb-5 mt-2">
+        <div class="p-0 mb-4">
           <input type="text" name="nombre" id="nombre" placeholder="Nombre" th:value="${nombre}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El nombre es obligatorio</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="text" name="apellido" id="apellido" placeholder="Apellido" th:value="${apellido}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El apellido es obligatorio</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="number" name="documento" id="documento" placeholder="DNI" th:value="${documento}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El documento es obligatorio</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="number" name="telefono" id="telefono" placeholder="Telefono" th:value="${telefono}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El telefono es obligatorio</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="email" name="correo" id="correo" placeholder="Correo electronico" th:value="${correo}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">El correo es obligatorio</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="password" name="clave" id="clave" placeholder="Contraseña" th:value="${clave}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <input type="password" name="clave2" id="clave2" placeholder="Confirmación" th:value="${clave2}"
             class="form-control-lg border-0" required> <br>
           <div class="invalid-feedback text-center">Debe repetir la contraseña.</div>

@@ -48,7 +48,7 @@
             <td class="col" th:text="${p.fechaPrestamo}"></td>
             <td class="col" th:text="${p.libro.titulo}"></td>
             <td class="col-md-4 px-md-2">
-              <span th:text="|${p.cliente.nombre} ${p.cliente.apellido}|"></span>
+              <span th:text="|${p.usuario.nombre} ${p.usuario.apellido}|"></span>
             </td>
             <td class="col" th:text="${p.fechaDevolucion}"></td>
             <td class="col" th:text="${p.alta} ? 'Activo' : 'Devuelto'"></td>

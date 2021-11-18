@@ -1,6 +1,6 @@
 package com.libreriaSpring.Libreria.entidades;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -9,40 +9,50 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
-
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class) 
+@EntityListeners(AuditingEntityListener.class)
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @Column(nullable = false)
+    private Long documento;
+    @Column(nullable = false)
+    private String nombre;
+    @Column(nullable = false)
+    private String apellido;
+    private String telefono;
 
     @Column(nullable = false, unique = true)
     private String correo;
     @Column(nullable = false)
     private String clave;
-   
+
     @CreatedDate
     @Column(updatable = false, nullable = false)
-    private LocalDateTime creacion;
-    
+    private Date creacion;
+
     @LastModifiedDate
-    private LocalDateTime modificacion;
+    private Date modificacion;
 
     private Boolean alta;
-    
+
     @ManyToOne
     private Rol rol;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id, String correo, String clave, LocalDateTime creacion, LocalDateTime modificacion, Boolean alta, Rol rol) {
+    public Usuario(Integer id, Long documento, String nombre, String apellido, String telefono, String correo, String clave, Date creacion, Date modificacion, Boolean alta, Rol rol) {
         this.id = id;
+        this.documento = documento;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
         this.correo = correo;
         this.clave = clave;
         this.creacion = creacion;
@@ -57,6 +67,38 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Long getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Long documento) {
+        this.documento = documento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getCorreo() {
@@ -75,19 +117,19 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public LocalDateTime getCreacion() {
+    public Date getCreacion() {
         return creacion;
     }
 
-    public void setCreacion(LocalDateTime creacion) {
+    public void setCreacion(Date creacion) {
         this.creacion = creacion;
     }
 
-    public LocalDateTime getModificacion() {
+    public Date getModificacion() {
         return modificacion;
     }
 
-    public void setModificacion(LocalDateTime modificacion) {
+    public void setModificacion(Date modificacion) {
         this.modificacion = modificacion;
     }
 
@@ -106,4 +148,5 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+   
 }

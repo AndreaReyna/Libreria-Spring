@@ -21,19 +21,19 @@ public class Prestamo {
     private Date fechaDevolucion;
     @ManyToOne //El libro puede tener varios prestamos...
     private Libro libro;
-    @ManyToOne //El cliente puede tener varios prestamos...
-    private Cliente cliente;
+    @ManyToOne //El usuario puede tener varios prestamos...
+    private Usuario usuario;
     private Boolean alta;
 
     public Prestamo() {
     }
 
-    public Prestamo(Integer id, Date fechaPrestamo, Date fechaDevolucion, Libro libro, Cliente cliente, Boolean alta) {
+    public Prestamo(Integer id, Date fechaPrestamo, Date fechaDevolucion, Libro libro, Usuario usuario, Boolean alta) {
         this.id = id;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
         this.libro = libro;
-        this.cliente = cliente;
+        this.usuario = usuario;
         this.alta = alta;
     }
 
@@ -69,12 +69,12 @@ public class Prestamo {
         this.libro = libro;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Boolean getAlta() {

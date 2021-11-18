@@ -1,16 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Crear Admin</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libreria</title>
+  <link rel="icon" th:href="@{/img/icono2.png}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<form th:action="@{/admin/guardar}" method="POST">
-    <input type="email" name="correo">
-    <input type="password" name="clave">
-    <input type="password" name="clave2">
-    <input type="submit">
-    <div th:replace="fragmentos :: div-error"></div>
-</form>
+  <div class="contenido">
+    <div class="container mt-5">
+      <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
+        th:action="@{/admin/guardar}">
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="apellido">Nombre: </label> <br>
+          <input class="form-control text-dark" id="nombre" placeholder="nombre" th:value="${nombre}" name="nombre"
+            type="text"/>
+          <div class="invalid-feedback">El nombre es obligatorio</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="apellido">Apellido: </label> <br>
+          <input class="form-control text-dark" id="apellido" placeholder="Apellido" th:value="${apellido}" name="apellido"
+            type="text" />
+          <div class="invalid-feedback">El apellido es obligatorio</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="documento">Documento: </label> <br>
+          <input class="form-control text-dark" id="documento" placeholder="Documento" th:value="${documento}" name="documento"
+            type="number" />
+          <div class="invalid-feedback">El documento es obligatorio</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="telefono">Telefono: </label> <br>
+          <input class="form-control text-dark" id="telefono" placeholder="Telefono" th:value="${telefono}" name="telefono"
+            type="number"/>
+          <div class="invalid-feedback">El telefono es obligatorio</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="correo">Correo: </label> <br>
+          <input class="form-control text-dark" id="correo" placeholder="Correo" th:value="${correo}" name="correo"
+            type="email"/>
+          <div class="invalid-feedback">El correo es obligatorio</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="clave">Clave: </label> <br>
+          <input class="form-control text-dark" id="clave" placeholder="Clave" required th:value="${clave}"
+            type="password" name="clave" />
+          <div class="invalid-feedback">La contraseña es obligatoria</div>
+        </div>
+        <div class="form mb-3 col-xl-6 fs-5">
+          <label for="clave2">Repetir: </label> <br>
+          <input class="form-control text-dark" id="clave2" placeholder="Clave" required th:value="${clave2}"
+            type="password" name="clave2" />
+          <div class="invalid-feedback">Debe repetir la contraseña</div>
+        </div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <div th:replace="fragmentos :: div-error"></div>
+      </form>
+    </div>
+    <footer th:replace="fragmentos :: footer"></footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"></script>
+<!-- Cerrar alertas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+</script>
+<script type="text/javascript">
+  setTimeout(function () {
+    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+      $(".alert").remove();
+    });
+  }, 2000);
+</script>
+  <div class="espacio">
+  </div>
+  </div>
 </body>
+
 </html>

@@ -20,14 +20,14 @@
   <div th:replace="fragmentos :: div-error"></div>
   <div th:replace="fragmentos :: div-exito"></div>
 
-  <h2 class="text-center mt-5 mb-4">Listado de clientes</h2>
+  <h2 class="text-center mt-5 mb-4">Listado de usuarios</h2>
   <div class="mb-3 mt-3 container-fluid">
     <img th:src="@{/img/img16.jpg}" alt="libros" class="m-auto d-block sombreado img-fluid">
   </div>
-  <div th:if=${clientes.isEmpty()}>
-    <p class="ms-5 fs-5">Todavia no hay clientes cargados. <a th:href="@{/clientes/crear}">Ingresar un cliente.</a></p>
+  <div th:if=${usuarios.isEmpty()}>
+    <p class="ms-5 fs-5">Todavia no hay usuarios cargados. <a th:href="@{/usuarios/crear}">Ingresar un usuario.</a></p>
   </div>
-  <div class="table-responsive container-md mt-5" th:unless="${clientes.isEmpty()}">
+  <div class="table-responsive container-md mt-5" th:unless="${usuarios.isEmpty()}">
     <table class="table table-bordered">
       <thead class="table-secondary text-center">
         <tr>
@@ -38,27 +38,31 @@
           <th class="col">Telefono</th>
           <th class="col">Correo</th>
           <th class="col">Rol</th>
+          <th class="col">Fecha de creacion</th>
+          <th class="col">Fecha de modificacion</th>
           <th class="col">Estado</th>
           <th class="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="c : ${clientes}">
+        <tr th:each="c : ${usuarios}">
           <div>
             <td class="col" th:text="${c.id}"></td>
             <td class="col" th:text="${c.documento}"></td>
             <td class="col" th:text="${c.nombre}"></td>
             <td class="col" th:text="${c.apellido}"></td>
             <td class="col" th:text="${c.telefono}"></td>
-            <td class="col" th:text="${c.usuario.correo}"></td>
-            <td class="col" th:text="${c.usuario.rol.nombre}"></td>
+            <td class="col" th:text="${c.correo}"></td>
+            <td class="col" th:text="${c.rol.nombre}"></td>
+            <td class="col" th:text="${c.creacion}"></td>
+            <td class="col" th:text="${c.modificacion}"></td>
             <td class="col" th:text="${c.alta} ? 'Activo' : 'Baja'"></td>
             <td class="col d-flex justify-content-center">
-              <a class="btn btn-primary me-4" th:href="@{/clientes/editar/__${c.id}__}">Editar</a>
-              <form th:if=${c.alta} method="post" th:action="@{/clientes/baja/__${c.id}__}">
+              <a class="btn btn-primary me-4" th:href="@{/usuarios/editar/__${c.id}__}">Editar</a>
+              <form th:if=${c.alta} method="post" th:action="@{/usuarios/baja/__${c.id}__}">
                 <button class="btn btn-danger" type="submit">Dar de baja</button>
               </form>
-              <form th:if=${!c.alta} method="post" th:action="@{/clientes/alta/__${c.id}__}">
+              <form th:if=${!c.alta} method="post" th:action="@{/usuarios/alta/__${c.id}__}">
                 <button class="btn btn-success" type="submit">Dar de alta</button>
               </form>
             </td>

@@ -39,10 +39,10 @@
       </div>
 
       <div class="form mb-3 col-xl-6 fs-5" th:if="${action == 'guardar'}">
-        <label for="cliente">Cliente:</label> <br>
-        <select aria-label="Elegir cliente" class="form-select" id="cliente" required th:field="*{cliente}">
-          <option selected value="">Elegir cliente</option>
-          <option class="text-dark" th:each="c : ${clientes}" th:text="|${c.nombre} ${c.apellido}|" th:if=${c.alta}
+        <label for="usuario">Usuario:</label> <br>
+        <select aria-label="Elegir usuario" class="form-select" id="usuario" required th:field="*{usuario}">
+          <option selected value="">Elegir usuario</option>
+          <option class="text-dark" th:each="c : ${usuarios}" th:text="|${c.nombre} ${c.apellido}|" th:if=${c.alta}
             th:value="${c.id}"></option>
         </select>
         <div class="invalid-feedback">El cliente es obligatorio</div>

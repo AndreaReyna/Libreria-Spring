@@ -19,15 +19,15 @@
     <div class="container main">
         <h2 th:text="${title}" class="mt-5"></h2>
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
-            th:action="@{/clientes/__${action}__}" th:object="${cliente}">
+            th:action="@{/usuarios/__${action}__}" th:object="${usuario}">
             <div class="form mb-3 col-xl-6">
-                <input class="form-control" id="id" placeholder="id" th:field="*{id}" th:readonly="${cliente.id}"
+                <input class="form-control" id="id" placeholder="id" th:field="*{id}" th:readonly="${usuario.id}"
                     type="text" style="visibility:hidden" />
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="documento">DNI: </label> <br>
                 <input class="form-control" id="documento" placeholder="DNI" required th:field="*{documento}"
-                    th:readonly="${cliente.documento != null}" type="number" />
+                    th:readonly="${usuario.documento != null}" type="number" />
                 <div class="invalid-feedback">El DNI es obligatorio</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
@@ -51,19 +51,19 @@
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="correo">Correo: </label> <br>
                 <input class="form-control text-dark" id="correo" placeholder="Correo"
-                th:value="${correo}" name="correo" type="email"/>
-                <div class="invalid-feedback">El telefono es obligatorio</div>
+                th:field="*{correo}" type="email"/>
+                <div class="invalid-feedback">El correo es obligatorio</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="clave">Nueva clave: </label> <br>
                 <input class="form-control text-dark" id="clave" placeholder="Clave" required
-                th:value="${clave}" type="password" name="clave"/>
+                th:field="*{clave}" type="password"/>
                 <div class="invalid-feedback">La contraseña es obligatoria</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="clave2">Repita la clave: </label> <br>
                 <input class="form-control text-dark" id="clave2" placeholder="Clave" required
-                    th:value="${clave2}" type="password" name="clave2" />
+                    th:value="${clave}" type="password" name="clave2"/>
                 <div class="invalid-feedback">Debe repetir la contraseña</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col">
                     <button class="btn btn-primary"
-                        th:text="${action == 'guardar'} ? 'Crear cliente' : 'Guardar cambios'" type="submit"></button>
+                        th:text="${action == 'guardar'} ? 'Crear' : 'Guardar cambios'" type="submit"></button>
                         <button class="btn btn-secondary ms-5" type="reset">Limpiar</button>
                 </div>
             </div>

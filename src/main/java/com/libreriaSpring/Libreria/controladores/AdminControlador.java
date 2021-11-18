@@ -1,4 +1,3 @@
-
 package com.libreriaSpring.Libreria.controladores;
 
 import Excepciones.ErrorServicio;
@@ -23,7 +22,7 @@ public class AdminControlador {
     @Autowired
     private UsuarioServicio us;
     @GetMapping("/crear")
-    public ModelAndView crearAutor() {
+    public ModelAndView crearAdmin() {
         ModelAndView mav = new ModelAndView("admin");
         mav.addObject("Usuario", new Usuario());
         mav.addObject("action", "guardar");
@@ -31,10 +30,10 @@ public class AdminControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, RedirectAttributes a) throws ErrorServicio, Exception {
+    public RedirectView guardar(@RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, RedirectAttributes a) throws ErrorServicio, Exception {
         RedirectView rw = new RedirectView("/admin");
         try {
-            us.crearAdmin(correo, clave, clave2);
+            us.crear(nombre, apellido, documento, telefono, correo, clave, clave2, 1);
             a.addFlashAttribute("exito", "El admin se guardó correctamente!");
         } catch (ErrorServicio e) {         
             a.addFlashAttribute("error", e.getMessage()); 

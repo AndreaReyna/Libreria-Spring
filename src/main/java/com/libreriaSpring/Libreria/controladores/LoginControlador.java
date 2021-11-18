@@ -81,4 +81,31 @@ public class LoginControlador {
         return rw;
     }
     
+    
+    ////////////pruebas
+    
+//     @GetMapping("/sesion/{id}")
+//    public ModelAndView editarLibro(@PathVariable Integer id) {
+//        ModelAndView mav = new ModelAndView("editarDatos");
+//        mav.addObject("usuario", us.buscarPorId(id));
+//        mav.addObject("cliente", cs.buscarTodos());
+//        mav.addObject("editoriales", es.buscarTodas());
+//        mav.addObject("title", "Editar Libro");
+//        mav.addObject("action", "modificar");
+//        return mav;
+//    }
+//
+//    @PostMapping("/modificar/sesion")
+//    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
+//        try {
+//           
+//            ls.modificar(id, titulo, anio, ejemplares, idAutor, idEd);
+//            a.addFlashAttribute("exito", "El libro se modificó correctamente!");
+//        } catch (Exception e) {
+//            a.addFlashAttribute("error", e.getMessage());
+//        }
+//
+//        return new RedirectView("/libros");
+//    }
+    
 }

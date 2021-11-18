@@ -5,9 +5,9 @@ import com.libreriaSpring.Libreria.entidades.Libro;
 import java.util.Date;
 import java.util.List;
 import com.libreriaSpring.Libreria.entidades.Prestamo;
-import com.libreriaSpring.Libreria.repositorios.ClienteRepositorio;
 import com.libreriaSpring.Libreria.repositorios.LibroRepositorio;
 import com.libreriaSpring.Libreria.repositorios.PrestamoRepositorio;
+import com.libreriaSpring.Libreria.repositorios.UsuarioRepositorio;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class PrestamoServicio {
     private PrestamoRepositorio pr;
 
     @Autowired
-    private ClienteRepositorio cr;
+    private UsuarioRepositorio ur;
 
     @Autowired
     private LibroRepositorio lr;
 
     @Transactional
-    public void crearPrestamo(Date fecha, Integer idLibro, Integer idCliente) throws ErrorServicio {
+    public void crearPrestamo(Date fecha, Integer idLibro, Integer idUsuario) throws ErrorServicio {
 
         Libro l = lr.findById(idLibro).orElse(null);
 
@@ -44,7 +44,7 @@ public class PrestamoServicio {
         Prestamo p = new Prestamo();
         p.setFechaDevolucion(null);
         p.setFechaPrestamo(fecha);
-        p.setCliente(cr.findById(idCliente).orElse(null));
+        p.setUsuario(ur.findById(idUsuario).orElse(null));
         p.setLibro(l);
         p.setAlta(true);
 

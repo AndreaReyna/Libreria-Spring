@@ -155,10 +155,13 @@ border: #D0B49F;
     animation-fill-mode: forwards;   
 }
 
-.div-registro{
-    height: 45rem;
+.form-registro{
+    background-color: rgba(0,0,0, .9);
+    padding: 3rem;
+    padding-right: 7rem;
+    padding-left: 7rem;
+    border-radius: 20px;
 }
-
 .nav-link-logout{
     color:#D0B49F;
 
