@@ -9,7 +9,7 @@
   <link rel="icon" th:href="@{/img/icono2.png}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-  <link rel="stylesheet" th:href="@{/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 
 
@@ -35,50 +35,55 @@
 
     <div class="w-100 d-flex align-items-center justify-content-center div-registro">
       <form id="formulario" class="needs-validation form-registro form-control-lg" th:action="@{/registro}" method="POST"
-        novalidate>
+        novalidate enctype="multipart/form-data">
         <h2 class="fs-3 text-center mb-3 fw-bold h2-login">Registro</h2>
 
         <div class="p-0 mb-4">
           <input type="text" name="nombre" id="nombre" placeholder="Nombre" th:value="${nombre}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">El nombre es obligatorio</div>
         </div>
 
         <div class="mb-4">
           <input type="text" name="apellido" id="apellido" placeholder="Apellido" th:value="${apellido}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">El apellido es obligatorio</div>
         </div>
 
         <div class="mb-4">
           <input type="number" name="documento" id="documento" placeholder="DNI" th:value="${documento}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">El documento es obligatorio</div>
         </div>
 
         <div class="mb-4">
           <input type="number" name="telefono" id="telefono" placeholder="Telefono" th:value="${telefono}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">El telefono es obligatorio</div>
         </div>
 
         <div class="mb-4">
           <input type="email" name="correo" id="correo" placeholder="Correo electronico" th:value="${correo}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">El correo es obligatorio</div>
         </div>
 
         <div class="mb-4">
           <input type="password" name="clave" id="clave" placeholder="Contraseña" th:value="${clave}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">La contraseña es obligatoria</div>
         </div>
 
         <div class="mb-4">
           <input type="password" name="clave2" id="clave2" placeholder="Confirmación" th:value="${clave2}"
-            class="form-control-lg border-0" required> <br>
+            class="form-control-lg border-0 w-100" required> <br>
           <div class="invalid-feedback text-center">Debe repetir la contraseña.</div>
         </div>
+        
+        <div class="mb-4 mt-2">
+          <label for="imagen" class="text-white">Cargar foto: </label> <br>
+          <input class="form-control border-0" type="file" name="imagen" accept="image/*">
+      </div>
 
         <div class="d-flex justify-content-center mt-4">
           <button type="submit" class="btn-lg btn-primary w-100">Registrarse</button>
@@ -86,13 +91,10 @@
       </form>
     </div>
 
-
     <div th:replace="fragmentos :: div-error"></div>
     <div th:replace="fragmentos :: div-exito"></div>
 
-
     <footer th:replace="fragmentos :: footer"></footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

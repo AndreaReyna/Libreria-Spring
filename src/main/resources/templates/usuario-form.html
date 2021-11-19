@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link rel="icon" th:href="@{/img/icono2.png}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 
 <body>
@@ -17,9 +17,10 @@
     <nav th:replace="fragmentos :: navbar"></nav>
 
     <div class="container main">
-        <h2 th:text="${title}" class="mt-5"></h2>
+        <h2 th:text="${title}" class="mt-4"></h2>
+     <div th:replace="fragmentos :: div-error"></div>
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
-            th:action="@{/usuarios/__${action}__}" th:object="${usuario}">
+            th:action="@{/usuarios/__${action}__}" th:object="${usuario}" enctype="multipart/form-data">
             <div class="form mb-3 col-xl-6">
                 <input class="form-control" id="id" placeholder="id" th:field="*{id}" th:readonly="${usuario.id}"
                     type="text" style="visibility:hidden" />
@@ -32,21 +33,18 @@
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="nombre">Nombre: </label> <br>
-                <input class="form-control text-dark" id="nombre" placeholder="Nombre" required th:field="*{nombre}"
-                    type="text" />
-                <div class="invalid-feedback">El nombre es obligatorio</div>
+                <input class="form-control text-dark" id="nombre" placeholder="Nombre" th:field="*{nombre}"
+                    type="text"/>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="apellido">Apellido: </label> <br>
-                <input class="form-control text-dark" id="apellido" placeholder="Apellido" required
+                <input class="form-control text-dark" id="apellido" placeholder="Apellido"
                     th:field="*{apellido}" type="text" />
-                <div class="invalid-feedback">El apellido es obligatorio</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="telefono">Telefono: </label> <br>
-                <input class="form-control text-dark" id="telefono" placeholder="Telefono" required
+                <input class="form-control text-dark" id="telefono" placeholder="Telefono"
                     th:field="*{telefono}" type="text" />
-                <div class="invalid-feedback">El telefono es obligatorio</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="correo">Correo: </label> <br>
@@ -56,35 +54,37 @@
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="clave">Nueva clave: </label> <br>
-                <input class="form-control text-dark" id="clave" placeholder="Clave" required
+                <input class="form-control text-dark" id="clave" placeholder="Clave"
                 th:field="*{clave}" type="password"/>
-                <div class="invalid-feedback">La contraseña es obligatoria</div>
+                <div class="invalid-feedback">La clave es obligatoria</div>
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
                 <label for="clave2">Repita la clave: </label> <br>
-                <input class="form-control text-dark" id="clave2" placeholder="Clave" required
+                <input class="form-control text-dark" id="clave2" placeholder="Clave"
                     th:value="${clave}" type="password" name="clave2"/>
-                <div class="invalid-feedback">Debe repetir la contraseña</div>
+                    <div class="invalid-feedback">La clave es obligatoria</div>
             </div>
-            <div class="form mb-3 col-xl-6 fs-5">
+            <div class="form mb-3 col-xl-6 fs-5"  sec:authorize="hasRole('ADMIN')">
                 <label for="rol">Rol:</label> <br>
-                <select aria-label="Elegir rol" class="form-select" id="rol" required name="idRol">
+                <select aria-label="Elegir rol" class="form-select" id="rol" name="idRol">
                     <option selected value="">Elegir rol</option>
                     <option class="text-black" th:each="rol : ${roles}" th:text="|${rol.nombre}|"
                     th:value="${rol.id}"></option>
-                </select>
-                <div class="invalid-feedback">El rol es obligatorio</div>             
+                </select>          
             </div>
-
+            <div class="mb-3 col-xl-6">
+                <label for="imagen">Cargar foto </label>
+                <input class="form-control mt-2" type="file" name="imagen" accept="image/*">
+            </div>
             <div class="row">
                 <div class="col">
                     <button class="btn btn-primary"
                         th:text="${action == 'guardar'} ? 'Crear' : 'Guardar cambios'" type="submit"></button>
-                        <button class="btn btn-secondary ms-5" type="reset">Limpiar</button>
+                        <button class="btn btn-secondary ms-4" type="reset">Limpiar</button>
                 </div>
             </div>
         </form>
-        <div th:replace="fragmentos :: div-error"></div>
+
     </div>
 
     <footer th:replace="fragmentos :: footer"></footer>
@@ -93,7 +93,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <script>
+<script>
         (() => {
             "use strict";
 
@@ -108,15 +108,16 @@
             }, false);
         })()
     </script>
+    
     <!-- Cerrar alertas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
     </script>
     <script type="text/javascript">
-        setTimeout(function () {
-            $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                $(".alert").remove();
-            });
-        }, 2000);
+      setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+          $(".alert").remove();
+        });
+      }, 2000);
     </script>
       <div class="espacio">
     </div>

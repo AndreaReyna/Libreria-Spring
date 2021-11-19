@@ -80,6 +80,7 @@ public class PrestamoControlador {
             a.addFlashAttribute("exito", "La devolución se realizó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
+             return new RedirectView("/prestamos/editar/" + id);
         }
         return new RedirectView("/prestamos");
     }

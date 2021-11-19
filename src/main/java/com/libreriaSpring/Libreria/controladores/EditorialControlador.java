@@ -69,6 +69,7 @@ public class EditorialControlador {
             a.addFlashAttribute("exito", "La editorial se modificó correctamente!");
         } catch (ErrorServicio e) {
             a.addFlashAttribute("error", e.getMessage());
+             return new RedirectView("/editoriales/editar/" + id);
         }
         return new RedirectView("/editoriales");
     }

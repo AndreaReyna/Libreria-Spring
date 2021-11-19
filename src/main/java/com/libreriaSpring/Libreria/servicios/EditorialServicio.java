@@ -38,7 +38,10 @@ public class EditorialServicio {
 
     @Transactional
     public void modificar(Integer id, String nombre) throws ErrorServicio {
-        validar(nombre);
+        Editorial e = er.findById(id).orElse(null);
+        if (!e.getNombre().equals(nombre)) {
+         validar(nombre);   
+        }     
         er.modificar(id, nombre);
     }
 

@@ -31,6 +31,8 @@ public class Usuario {
     private String correo;
     @Column(nullable = false)
     private String clave;
+    
+    private String imagen;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
@@ -47,7 +49,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id, Long documento, String nombre, String apellido, String telefono, String correo, String clave, Date creacion, Date modificacion, Boolean alta, Rol rol) {
+    public Usuario(Integer id, Long documento, String nombre, String apellido, String telefono, String imagen, String correo, String clave, Date creacion, Date modificacion, Boolean alta, Rol rol) {
         this.id = id;
         this.documento = documento;
         this.nombre = nombre;
@@ -59,6 +61,7 @@ public class Usuario {
         this.modificacion = modificacion;
         this.alta = alta;
         this.rol = rol;
+        this.imagen = imagen;
     }
 
     public Integer getId() {
@@ -148,5 +151,12 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-   
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }

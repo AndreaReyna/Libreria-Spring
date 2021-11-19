@@ -70,6 +70,7 @@ public class AutorControlador {
             a.addFlashAttribute("exito", "El autor se modificó correctamente!");
         } catch (ErrorServicio e) {
             a.addFlashAttribute("error", e.getMessage());
+           return new RedirectView("/autores/editar/" + id);
         }
         return new RedirectView("/autores");
     }

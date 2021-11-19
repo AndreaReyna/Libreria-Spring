@@ -1,7 +1,6 @@
 package com.libreriaSpring.Libreria.servicios;
 
 import Excepciones.ErrorServicio;
-import com.libreriaSpring.Libreria.entidades.Autor;
 import java.util.List;
 import com.libreriaSpring.Libreria.entidades.Libro;
 import com.libreriaSpring.Libreria.repositorios.AutorRepositorio;

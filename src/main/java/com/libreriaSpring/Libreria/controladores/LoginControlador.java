@@ -1,14 +1,18 @@
 package com.libreriaSpring.Libreria.controladores;
 
+import com.libreriaSpring.Libreria.servicios.RolServicio;
 import com.libreriaSpring.Libreria.servicios.UsuarioServicio;
 import java.security.Principal;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -19,6 +23,9 @@ public class LoginControlador {
 
     @Autowired
     private UsuarioServicio us;
+
+    @Autowired
+    private RolServicio rs;
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal) {
@@ -59,11 +66,11 @@ public class LoginControlador {
     }
 
     @PostMapping("/registro")
-    public RedirectView signup(@RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, HttpServletRequest request, RedirectAttributes a) {
+    public RedirectView signup(@RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, @RequestParam MultipartFile imagen, HttpServletRequest request, RedirectAttributes a) {
         RedirectView rw = new RedirectView("/login");
 
         try {
-            us.crear(nombre, apellido, documento, clave2, correo, clave, clave2, 2);
+            us.crear(nombre, apellido, documento, clave2, correo, clave, clave2, 2, imagen);
 
             a.addFlashAttribute("exito", "El registro fue exitoso");
 
@@ -81,31 +88,16 @@ public class LoginControlador {
         return rw;
     }
     
-    
-    ////////////pruebas
-    
-//     @GetMapping("/sesion/{id}")
-//    public ModelAndView editarLibro(@PathVariable Integer id) {
-//        ModelAndView mav = new ModelAndView("editarDatos");
-//        mav.addObject("usuario", us.buscarPorId(id));
-//        mav.addObject("cliente", cs.buscarTodos());
-//        mav.addObject("editoriales", es.buscarTodas());
-//        mav.addObject("title", "Editar Libro");
-//        mav.addObject("action", "modificar");
-//        return mav;
-//    }
-//
-//    @PostMapping("/modificar/sesion")
-//    public RedirectView modificar(@RequestParam Integer id, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam("autor") Integer idAutor, @RequestParam("editorial") Integer idEd, RedirectAttributes a) throws ErrorServicio {
-//        try {
-//           
-//            ls.modificar(id, titulo, anio, ejemplares, idAutor, idEd);
-//            a.addFlashAttribute("exito", "El libro se modificó correctamente!");
-//        } catch (Exception e) {
-//            a.addFlashAttribute("error", e.getMessage());
-//        }
-//
-//        return new RedirectView("/libros");
-//    }
-    
+        @GetMapping("/modificar/{id}")
+        public ModelAndView editarUsuario(@PathVariable Integer id, HttpSession session) throws Exception {
+        if (!session.getAttribute("id").equals(id)) {
+            return new ModelAndView(new RedirectView("/"));
+        }
+        ModelAndView mav = new ModelAndView("usuario-form");
+        mav.addObject("usuario", us.buscarPorId(id));
+        mav.addObject("title", "Editar Usuario");
+        mav.addObject("roles", rs.buscarTodos());
+        mav.addObject("action", "modificar");
+        return mav;
+    }
 }

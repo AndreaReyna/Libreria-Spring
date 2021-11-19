@@ -81,7 +81,6 @@ border: #D0B49F;
     border: #D0B49F;
     }  
 
-
 .dropdown-item:focus, li:focus{
  background-color: #A47551 !important;
 }
@@ -117,11 +116,10 @@ border: #D0B49F;
 
 /*LOGIN*/
 .todo-login{
-    background-image: url(img/img1.jpg);
+    background-image: url(../img/img1.jpg);
     background-size: cover;
     filter:brightness(0.9);
 }
-
 .div-login{
     height: 40rem;
 }
@@ -142,12 +140,10 @@ border: #D0B49F;
     padding: 0.5rem;
     border-radius: 10px;
 }
-
 .nav-link-login{
     color: #523A28;
     font-weight: bold;
 }
-
 .nav-link-login:hover, .nav-item-login:hover{
     color: #523A28;
     animation-name: aumento;
@@ -162,11 +158,11 @@ border: #D0B49F;
     padding-left: 7rem;
     border-radius: 20px;
 }
+
 .nav-link-logout{
     color:#D0B49F;
 
 }
-
 .nav-item-logout:hover, .nav-link-logout:hover{ 
     color: white;
 }

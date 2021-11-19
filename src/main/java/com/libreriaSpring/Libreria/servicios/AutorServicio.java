@@ -43,7 +43,10 @@ public class AutorServicio {
 
     @Transactional
     public void modificar(Integer id, String nombre) throws ErrorServicio {
-        validar(nombre);
+        Autor a = AutorRepositorio.findById(id).orElse(null);
+        if (!a.getNombre().equals(nombre)) {
+         validar(nombre);   
+        }     
         AutorRepositorio.modificar(id, nombre);
     }
 

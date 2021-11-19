@@ -20,10 +20,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
     @Query("UPDATE Usuario a SET a.alta = :alta WHERE a.id = :id")
     void baja(@Param("id") Integer id, @Param("alta") Boolean alta);
     
-    @Modifying
-    @Query("UPDATE Usuario a SET a.nombre = :nombre, a.apellido = :apellido, a.telefono = :telefono, a.correo = :correo WHERE a.id = :id")
-    void modificar(@Param("id") Integer id, @Param("nombre") String nombre, @Param("apellido") String apellido, @Param("telefono") String telefono, @Param("correo") String correo);
-
     @Query("SELECT a FROM Usuario a WHERE a.documento = :documento")
     Usuario buscarDni(@Param("documento") Long documento);
 }

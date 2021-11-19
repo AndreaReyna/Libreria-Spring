@@ -7,6 +7,7 @@ import com.libreriaSpring.Libreria.repositorios.UsuarioRepositorio;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UsuarioServicio implements UserDetailsService {
@@ -33,12 +37,16 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private EmailServicio es;
 
+    @Autowired
+    private ImagenServicio is;
+
     @Transactional
-    public void crear(String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol) throws Exception {
+    public void crear(String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol, MultipartFile imagen) throws Exception {
 
         validarCorreo(correo);
         validarDNI(dni);
-        validaciones(nombre, apellido, tel, clave, clave2);
+        validarClave(clave, clave2);
+        validarNombreTel(nombre, apellido, tel);
 
         Usuario u = new Usuario();
         u.setDocumento(dni);
@@ -47,8 +55,14 @@ public class UsuarioServicio implements UserDetailsService {
         u.setTelefono(tel);
         u.setCorreo(correo);
         u.setClave(encoder.encode(clave));
-        u.setRol(rr.getById(idRol));
-
+        if (ur.findAll().isEmpty()) {
+            u.setRol(rr.buscarRol("ADMIN"));
+        } else {
+            u.setRol(rr.getById(idRol));
+        }
+        if (!imagen.isEmpty()) {
+            u.setImagen(is.copiar(imagen));
+        }
         u.setAlta(true);
         ur.save(u);
         es.enviarThread(correo);
@@ -59,6 +73,16 @@ public class UsuarioServicio implements UserDetailsService {
         Usuario usuario = ur.findByCorreo(correo).orElseThrow(() -> new UsernameNotFoundException("No existe un usuario asociado al correo ingresado"));
 
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().getNombre());
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession(true);
+
+        session.setAttribute("id", usuario.getId());
+        session.setAttribute("nombre", usuario.getNombre());
+        session.setAttribute("apellido", usuario.getApellido());
+        session.setAttribute("correo", usuario.getCorreo());
+        session.setAttribute("imagen", usuario.getImagen());
+        session.setAttribute("rol", usuario.getRol().getNombre());
 
         return new User(usuario.getCorreo(), usuario.getClave(), Collections.singletonList(authority));
     }
@@ -81,7 +105,8 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol) throws Exception {
+    public void modificar(Integer id, String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol, MultipartFile imagen) throws Exception {
+        validarClave(clave, clave2);
 
         Usuario u = buscarPorId(id);
         if (!u.getCorreo().equals(correo)) {
@@ -89,14 +114,25 @@ public class UsuarioServicio implements UserDetailsService {
             u.setCorreo(correo);
         }
 
-        validaciones(nombre, apellido, tel, clave, clave2);
+        if (apellido != null && !apellido.equals(u.getApellido())) {
+            u.setApellido(apellido);
+        }
+        if (nombre != null && !nombre.equals(u.getNombre())) {
+            u.setNombre(nombre);
+        }
+        if (tel != null && !tel.equals(u.getTelefono())) {
+            u.setTelefono(tel);
+        }
         
-        u.setApellido(apellido);
-        u.setNombre(nombre);
-        u.setTelefono(tel);
-        u.setClave(encoder.encode(clave));
-        u.setRol(rr.findById(idRol).orElse(null));
-        u.setAlta(true);
+        u.setClave(encoder.encode(clave));     
+       
+        if (idRol != 0 && idRol != u.getRol().getId()) {
+         u.setRol(rr.findById(idRol).orElse(null));           
+        }
+
+        if (!imagen.isEmpty()) {
+            u.setImagen(is.copiar(imagen));
+        }
         ur.save(u);
     }
 
@@ -110,7 +146,7 @@ public class UsuarioServicio implements UserDetailsService {
         ur.baja(id, true);
     }
 
-    public void validaciones(String nombre, String apellido, String tel, String clave, String clave2) throws ErrorServicio {
+    public void validarNombreTel(String nombre, String apellido, String tel) throws ErrorServicio {
 
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new ErrorServicio("El nombre no puede estar vacio.");
@@ -118,13 +154,6 @@ public class UsuarioServicio implements UserDetailsService {
         if (apellido == null || apellido.trim().isEmpty()) {
             throw new ErrorServicio("El apellido no puede estar vacio.");
         }
-        if (clave.length() < 8) {
-            throw new ErrorServicio("La contraseña debe tener al menos 8 caracteres");
-        }
-        if (!clave.equals(clave2)) {
-            throw new ErrorServicio("Las contraseñas no coinciden");
-        }
-
         if (tel.length() < 6) {
             throw new ErrorServicio("El telefono debe tener al menos 6 digitos");
         }
@@ -134,6 +163,15 @@ public class UsuarioServicio implements UserDetailsService {
     public void validarCorreo(String correo) throws ErrorServicio {
         if (ur.existsUsuarioByCorreo(correo)) {
             throw new ErrorServicio("Ya existe un usuario asociado al correo ingresado");
+        }
+    }
+
+    public void validarClave(String clave, String clave2) throws ErrorServicio {
+        if (clave.length() < 8) {
+            throw new ErrorServicio("La contraseña debe tener al menos 8 caracteres");
+        }
+        if (!clave.equals(clave2)) {
+            throw new ErrorServicio("Las contraseñas no coinciden");
         }
     }
 

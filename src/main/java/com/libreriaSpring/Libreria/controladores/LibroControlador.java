@@ -81,6 +81,7 @@ public class LibroControlador {
             a.addFlashAttribute("exito", "El libro se modificó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
+             return new RedirectView("/libros/editar/" + id);
         }
 
         return new RedirectView("/libros");
