@@ -4,6 +4,7 @@ import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Usuario;
 import com.libreriaSpring.Libreria.servicios.RolServicio;
 import com.libreriaSpring.Libreria.servicios.UsuarioServicio;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -74,9 +75,9 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam String clave, @RequestParam String clave2, @RequestParam(defaultValue = "0") Integer idRol, @RequestParam MultipartFile imagen, HttpSession session, RedirectAttributes a) {
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam(defaultValue = "0") Long documento, @RequestParam String telefono, @RequestParam String correo, @RequestParam(defaultValue = "0") String clave, @RequestParam(defaultValue = "0") String clave2, @RequestParam(defaultValue = "0") Integer idRol, @RequestParam MultipartFile imagen, HttpSession session, RedirectAttributes a) {
         try {
-            us.modificar(id, nombre, apellido, documento, telefono, correo, clave, clave2, idRol, imagen);
+            us.modificar(id, nombre, apellido, documento, telefono, correo, idRol, imagen);
             a.addFlashAttribute("exito", "El usuario se modificó correctamente!");
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());

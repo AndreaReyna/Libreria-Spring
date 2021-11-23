@@ -105,10 +105,10 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre, String apellido, Long dni, String tel, String correo, String clave, String clave2, Integer idRol, MultipartFile imagen) throws Exception {
-        validarClave(clave, clave2);
-
+    public void modificar(Integer id, String nombre, String apellido, Long dni, String tel, String correo, Integer idRol, MultipartFile imagen) throws Exception {
+        
         Usuario u = buscarPorId(id);
+ 
         if (!u.getCorreo().equals(correo)) {
             validarCorreo(correo);
             u.setCorreo(correo);
@@ -121,10 +121,9 @@ public class UsuarioServicio implements UserDetailsService {
             u.setNombre(nombre);
         }
         if (tel != null && !tel.equals(u.getTelefono())) {
+            validarNombreTel("aaa", "aaa", tel);
             u.setTelefono(tel);
-        }
-        
-        u.setClave(encoder.encode(clave));     
+        }       
        
         if (idRol != 0 && idRol != u.getRol().getId()) {
          u.setRol(rr.findById(idRol).orElse(null));           
@@ -145,6 +144,16 @@ public class UsuarioServicio implements UserDetailsService {
     public void alta(Integer id) {
         ur.baja(id, true);
     }
+    
+    public void clave (Integer id, String clave, String clave2) throws ErrorServicio{
+       Usuario u = buscarPorId(id);
+        
+      validarClave(clave, clave2);
+      u.setClave(encoder.encode(clave));    
+     
+      ur.save(u);
+   
+    }
 
     public void validarNombreTel(String nombre, String apellido, String tel) throws ErrorServicio {
 
@@ -161,8 +170,14 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public void validarCorreo(String correo) throws ErrorServicio {
+        if (correo == null || correo.trim().isEmpty()) {
+        throw new ErrorServicio("El correo no puede estar vacio.");
+        }
         if (ur.existsUsuarioByCorreo(correo)) {
-            throw new ErrorServicio("Ya existe un usuario asociado al correo ingresado");
+        throw new ErrorServicio("Ya existe un usuario asociado al correo ingresado");
+        }
+        if (!(correo.contains("@") && correo.contains(".com"))) {
+         throw new ErrorServicio("Debe ingresar un formato de correo valido.");
         }
     }
 

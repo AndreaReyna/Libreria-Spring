@@ -33,6 +33,8 @@
       </div>
     </nav>
 
+    <div th:if=${error!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${error}"></div>
+
     <div class="w-100 d-flex align-items-center justify-content-center div-registro">
       <form id="formulario" class="needs-validation form-registro form-control-lg" th:action="@{/registro}" method="POST"
         novalidate enctype="multipart/form-data">
@@ -91,9 +93,6 @@
       </form>
     </div>
 
-    <div th:replace="fragmentos :: div-error"></div>
-    <div th:replace="fragmentos :: div-exito"></div>
-
     <footer th:replace="fragmentos :: footer"></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -107,7 +106,7 @@
         $(".alert").fadeTo(500, 0).slideUp(500, function () {
           $(".alert").remove();
         });
-      }, 2000);
+      }, 3000);
     </script>
     <script>
       (() => {

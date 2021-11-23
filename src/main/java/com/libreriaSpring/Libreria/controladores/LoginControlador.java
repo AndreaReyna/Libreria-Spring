@@ -70,11 +70,11 @@ public class LoginControlador {
         RedirectView rw = new RedirectView("/login");
 
         try {
-            us.crear(nombre, apellido, documento, clave2, correo, clave, clave2, 2, imagen);
+            us.crear(nombre, apellido, documento, telefono, correo, clave, clave2, 2, imagen);
 
             a.addFlashAttribute("exito", "El registro fue exitoso");
-
             request.login(correo, clave);
+            
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
             a.addFlashAttribute("nombre", nombre);
@@ -99,5 +99,29 @@ public class LoginControlador {
         mav.addObject("roles", rs.buscarTodos());
         mav.addObject("action", "modificar");
         return mav;
+    }
+     
+    @GetMapping("/clave/{id}")
+    public ModelAndView editarClave(@PathVariable Integer id, HttpSession session) throws Exception {
+        if (!session.getAttribute("id").equals(id)) {
+            return new ModelAndView(new RedirectView("/"));
+        }
+        ModelAndView mav = new ModelAndView("clave");
+        mav.addObject("usuario", us.buscarPorId(id));
+        mav.addObject("title", "Modificar contraseña");
+        mav.addObject("action", "clave");
+        return mav;
+    }
+    
+     @PostMapping("/clave")
+    public RedirectView clave(@RequestParam Integer id, @RequestParam String clave, @RequestParam String clave2, HttpSession session, RedirectAttributes a) {
+        try {
+            us.clave(id, clave, clave2);
+            a.addFlashAttribute("exito", "La clave se modificó correctamente!");
+        } catch (Exception e) {
+            a.addFlashAttribute("error", e.getMessage());
+            return new RedirectView("/clave/" + id);
+        }
+       return new RedirectView("/");
     }
 }

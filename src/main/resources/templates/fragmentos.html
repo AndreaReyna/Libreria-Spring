@@ -73,6 +73,7 @@
         aria-expanded="false" th:text="|${session.nombre} ${session.apellido}|"/></a>
       <ul class="dropdown-menu dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
         <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar datos</a></li>
+        <li><a class="dropdown-item" th:href="@{/clave/__${session.id}__}">Modificar clave</a></li>
         <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
       </ul>
     </li>

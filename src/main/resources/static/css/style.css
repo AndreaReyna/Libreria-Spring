@@ -112,8 +112,6 @@ border: #D0B49F;
 }
 
 
-
-
 /*LOGIN*/
 .todo-login{
     background-image: url(../img/img1.jpg);
@@ -166,3 +164,19 @@ border: #D0B49F;
 .nav-item-logout:hover, .nav-link-logout:hover{ 
     color: white;
 }
+
+/* --------- SACAR LAS FLECHAS PARA INCREMENTAR O DISMINUIR NÚMEROS --------- */
+/* Chrome */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;}
+/* Firefox */
+input[type="number"] {-moz-appearance: textfield;}
+input[type="number"]:hover,
+input[type="number"]:focus {-moz-appearance: number-input;}
+/* Other */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;}

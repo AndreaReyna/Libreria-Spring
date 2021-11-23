@@ -20,66 +20,26 @@
         <h2 th:text="${title}" class="mt-4"></h2>
      <div th:replace="fragmentos :: div-error"></div>
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
-            th:action="@{/usuarios/__${action}__}" th:object="${usuario}" enctype="multipart/form-data">
+        th:action="@{/clave}" th:object="${usuario}">
             <div class="form mb-3 col-xl-6">
                 <input class="form-control" id="id" placeholder="id" th:field="*{id}" th:readonly="${usuario.id}"
-                    type="text" style="visibility:hidden"/>
+                    type="text" style="visibility:hidden" />
             </div>
             <div class="form mb-3 col-xl-6 fs-5">
-                <label for="documento">DNI: </label> <br>
-                <input class="form-control" id="documento" placeholder="DNI" required th:field="*{documento}"
-                    th:readonly="${usuario.documento != null}" type="number" />
-                <div class="invalid-feedback">El DNI es obligatorio</div>
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5">
-                <label for="nombre">Nombre: </label> <br>
-                <input class="form-control text-dark" id="nombre" placeholder="Nombre" th:field="*{nombre}"
-                    type="text"/>
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5">
-                <label for="apellido">Apellido: </label> <br>
-                <input class="form-control text-dark" id="apellido" placeholder="Apellido"
-                    th:field="*{apellido}" type="text" />
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5">
-                <label for="telefono">Telefono: </label> <br>
-                <input class="form-control text-dark" id="telefono" placeholder="Telefono"
-                    th:field="*{telefono}" type="text" />
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5">
-                <label for="correo">Correo: </label> <br>
-                <input class="form-control text-dark" id="correo" placeholder="Correo"
-                th:field="*{correo}" type="email"/>
-                <div class="invalid-feedback">El correo es obligatorio</div>
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5" th:if="${action != 'modificar'}">
                 <label for="clave">Nueva clave: </label> <br>
                 <input class="form-control text-dark" id="clave" placeholder="Clave"
-                th:field="*{clave}" type="password" />
+                th:field="*{clave}" type="password" required/>
                 <div class="invalid-feedback">La clave es obligatoria</div>
             </div>
-            <div class="form mb-3 col-xl-6 fs-5" th:if="${action != 'modificar'}">
+            <div class="form mb-3 col-xl-6 fs-5">
                 <label for="clave2">Repita la clave: </label> <br>
                 <input class="form-control text-dark" id="clave2" placeholder="Clave"
-                    type="password" name="clave2" th:field="*{clave}" />
+                    type="password" name="clave2" th:value="${clave2}"required/>
                     <div class="invalid-feedback">La clave es obligatoria</div>
-            </div>
-            <div class="form mb-3 col-xl-6 fs-5"  sec:authorize="hasRole('ADMIN')">
-                <label for="rol">Rol:</label> <br>
-                <select aria-label="Elegir rol" class="form-select" id="rol" name="idRol">
-                    <option selected value="">Elegir rol</option>
-                    <option class="text-black" th:each="rol : ${roles}" th:text="|${rol.nombre}|"
-                    th:value="${rol.id}"></option>
-                </select>          
-            </div>
-            <div class="mb-3 col-xl-6">
-                <label for="imagen">Cargar foto </label>
-                <input class="form-control mt-2" type="file" name="imagen" accept="image/*">
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary"
-                        th:text="${action == 'guardar'} ? 'Crear' : 'Guardar cambios'" type="submit"></button>
+                    <button class="btn btn-primary" type="submit">Confirmar</button>
                         <button class="btn btn-secondary ms-4" type="reset">Limpiar</button>
                 </div>
             </div>
@@ -96,14 +56,12 @@
 <script>
         (() => {
             "use strict";
-
             const form = document.getElementById("formulario");
             form.addEventListener("submit", (event) => {
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
-
                 form.classList.add("was-validated");
             }, false);
         })()
