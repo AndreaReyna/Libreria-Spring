@@ -4,7 +4,6 @@ import Excepciones.ErrorServicio;
 import com.libreriaSpring.Libreria.entidades.Usuario;
 import com.libreriaSpring.Libreria.servicios.RolServicio;
 import com.libreriaSpring.Libreria.servicios.UsuarioServicio;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -79,6 +78,11 @@ public class UsuarioControlador {
         try {
             us.modificar(id, nombre, apellido, documento, telefono, correo, idRol, imagen);
             a.addFlashAttribute("exito", "El usuario se modificó correctamente!");
+            Usuario u = us.buscarPorId(id);
+            session.setAttribute("nombre", u.getNombre());
+            session.setAttribute("apellido", u.getApellido());
+            session.setAttribute("correo", u.getCorreo());
+            session.setAttribute("imagen", u.getImagen());
         } catch (Exception e) {
             a.addFlashAttribute("error", e.getMessage());
              if (session.getAttribute("rol").equals("ADMIN")) {

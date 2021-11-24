@@ -1,6 +1,7 @@
 package com.libreriaSpring.Libreria.servicios;
 
 import Excepciones.ErrorServicio;
+import com.libreriaSpring.Libreria.entidades.Rol;
 import com.libreriaSpring.Libreria.entidades.Usuario;
 import com.libreriaSpring.Libreria.repositorios.RolRepositorio;
 import com.libreriaSpring.Libreria.repositorios.UsuarioRepositorio;
@@ -56,9 +57,11 @@ public class UsuarioServicio implements UserDetailsService {
         u.setCorreo(correo);
         u.setClave(encoder.encode(clave));
         if (ur.findAll().isEmpty()) {
-            u.setRol(rr.buscarRol("ADMIN"));
-        } else {
-            u.setRol(rr.getById(idRol));
+            Rol r1 = new Rol("ADMIN");
+            Rol r2 = new Rol("CLIENTE");
+            rr.save(r1);
+            rr.save(r2);
+            u.setRol(r1);
         }
         if (!imagen.isEmpty()) {
             u.setImagen(is.copiar(imagen));
@@ -130,7 +133,8 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
         if (!imagen.isEmpty()) {
-            u.setImagen(is.copiar(imagen));
+            is.borrarImagen(u.getImagen());
+            u.setImagen(is.copiar(imagen));   
         }
         ur.save(u);
     }

@@ -24,6 +24,16 @@ public class ImagenServicio {
             return imagen;
         } catch (IOException e) {
             throw new Exception("Error al guardar la imagen");
+       }
+    }
+    
+        public String borrarImagen(String imagen) throws Exception {
+        try {
+            Path ruta = Paths.get(directory, imagen).toAbsolutePath();
+            Files.delete(ruta);
+            return imagen;
+        } catch (IOException e) {
+            throw new Exception("Error al eliminar la imagen");
         }
     }
 }
