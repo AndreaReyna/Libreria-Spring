@@ -7,6 +7,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -44,6 +45,7 @@ public class Usuario {
     private Boolean alta;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Rol rol;
 
     public Usuario() {

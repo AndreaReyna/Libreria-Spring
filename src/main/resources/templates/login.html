@@ -49,8 +49,8 @@
   </form>
 
 </div>  
-<div th:replace="fragmentos :: div-error"></div>
-<div th:replace="fragmentos :: div-exito"></div>
+    <div th:if=${error!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${error}"></div>
+    <div th:if=${exito!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${exito}"></div>
 
  
 <footer th:replace="fragmentos :: footer"></footer>

@@ -34,7 +34,8 @@
     </nav>
 
     <div th:if=${error!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${error}"></div>
-
+    <div th:if=${exito!=null} class="alert alert-dismissible alert-danger mt-4 col-xl-6 text-align:center container" th:text="${exito}"></div>
+     
     <div class="w-100 d-flex align-items-center justify-content-center div-registro">
       <form id="formulario" class="needs-validation form-registro form-control-lg" th:action="@{/registro}" method="POST"
         novalidate enctype="multipart/form-data">
@@ -84,7 +85,7 @@
         
         <div class="mb-4 mt-2">
           <label for="imagen" class="text-white">Cargar foto: </label> <br>
-          <input class="form-control border-0" type="file" name="imagen" accept="image/*">
+          <input class="form-control border-0" type="file" name="imagen" accept="image/*,.pdf">
       </div>
 
         <div class="d-flex justify-content-center mt-4">

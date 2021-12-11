@@ -62,6 +62,8 @@ public class UsuarioServicio implements UserDetailsService {
             rr.save(r1);
             rr.save(r2);
             u.setRol(r1);
+        }else{
+            u.setRol(rr.buscarRol("CLIENTE"));
         }
         if (!imagen.isEmpty()) {
             u.setImagen(is.copiar(imagen));
@@ -150,7 +152,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
     
     public void clave (Integer id, String clave, String clave2) throws ErrorServicio{
-       Usuario u = buscarPorId(id);
+      Usuario u = buscarPorId(id);
         
       validarClave(clave, clave2);
       u.setClave(encoder.encode(clave));    
@@ -170,7 +172,6 @@ public class UsuarioServicio implements UserDetailsService {
         if (tel.length() < 6) {
             throw new ErrorServicio("El telefono debe tener al menos 6 digitos");
         }
-
     }
 
     public void validarCorreo(String correo) throws ErrorServicio {
